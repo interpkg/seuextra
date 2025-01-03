@@ -1,0 +1,28 @@
+Package: SeuExtra
+Version: 0.1.0
+Data: 2025-1-3
+Title: Seurat/Signac analysis functions
+Description: This package for downstream data analysis
+Author: Hua Sun [aut,cre]
+Maintainer: Hua Sun <hua.sun@stjude.org>
+URL: https://github.com/hsun9/seuextra
+BugReports: https://github.com/hsun9/seuextra/issues
+License: License: MIT + file LICENSE
+Depends:
+    R (>= 4.2.1)
+Imports:
+    Seurat (>= 4.3.0),
+    Signac,
+    GenomicRanges,
+    future,
+    dplyr,
+    ggplot2,
+    biovizBase,
+    stringr,
+    stringi,
+    patchwork
+RoxygenNote: 7.3.2
+Encoding: UTF-8
+Suggests: 
+    testthat (>= 3.0.0)
+Config/testthat/edition: 3
