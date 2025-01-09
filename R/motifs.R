@@ -29,7 +29,7 @@ CalMeanMotifSig <- function(seu, motifs='all', group='')
     col_name <- col_name[ !col_name == group]
 
     d_motif <- d_motif %>% 
-            group_by(group) %>%
+            group_by(.data[[group]]) %>%
             summarise(across(col_name, mean))
 
     return(d_motif)
