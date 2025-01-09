@@ -1,6 +1,3 @@
-# 2024-12-27
-
-library(dplyr)
 
 
 #' Export UMAP
@@ -8,6 +5,9 @@ library(dplyr)
 #' @param reference anno
 #' @return anotation
 #' @export
+#'
+#' @examples
+#' d_umap <- ExportUMAP(seu, 'wnn.umap')
 #'
 ExportUMAP <- function(object, umap)
 {

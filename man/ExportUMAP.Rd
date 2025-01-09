@@ -15,3 +15,7 @@ anotation
 \description{
 Export UMAP
 }
+\examples{
+d_umap <- ExportUMAP(seu, 'wnn.umap')
+
+}
