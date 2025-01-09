@@ -1,6 +1,4 @@
 # 2024-12-27
-
-library(dplyr)
 options(scipen = 999)
 
 
@@ -27,9 +25,13 @@ CalMeanMotifSig <- function(seu, motifs='all', group='')
     metadata <- seu@meta.data
     d_motif[group] <- metadata[[group]][match(rownames(metadata), rownames(d_motif))]
 
+    # remove group name
+    col_name <- colnames(d_motif)
+    col_name <- col_name[ !col_name == group]
+
     d_motif <- d_motif %>% 
             group_by(get(group)) %>%
-            summarise(across(everything(), mean))
+            summarise(across(col_name, mean))
 
     return(d_motif)
 }
