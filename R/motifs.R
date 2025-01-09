@@ -25,7 +25,7 @@ CalMeanMotifSig <- function(seu, motifs='all', group='')
     # H_02_2138_AAACAGCCAAGTGAAC.1  0.9646257  0.03137187  0.23462118
 
     metadata <- seu@meta.data
-    d_motif[group] <- metadata[group][match(rownames(metadata), rownames(d_motif))]
+    d_motif[group] <- metadata[[group]][match(rownames(metadata), rownames(d_motif))]
 
     d_motif <- d_motif %>% 
             group_by(get(group)) %>%
