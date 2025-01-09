@@ -65,7 +65,7 @@ CalMeanMotifSig <- function(seu, motifs='all', group='', split=FALSE)
             dsub <- d_motif[cells,]
             print(paste0(s, ':', nrow(dsub)))
             dsub_score <- CallMeanByGroup(dsub, group)
-            dsub_score$subgroup <- s
+            dsub_score$orig.ident <- s
 
             if (i == 1){
                 d_avg_score <- dsub_score
