@@ -1,12 +1,11 @@
-# 2024-12-27
-options(scipen = 999)
-
 
 
 #' Annotations
 #'
 #' @param object anno
-#' @return anotation
+#' @param motif ids
+#' @param group name
+#' @return data frame
 #' @export
 #'
 CalMeanMotifSig <- function(seu, motifs='all', group='')
@@ -30,7 +29,7 @@ CalMeanMotifSig <- function(seu, motifs='all', group='')
     col_name <- col_name[ !col_name == group]
 
     d_motif <- d_motif %>% 
-            group_by(get(group)) %>%
+            group_by(group) %>%
             summarise(across(col_name, mean))
 
     return(d_motif)
