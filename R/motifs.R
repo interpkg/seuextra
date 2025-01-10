@@ -36,20 +36,20 @@ CallMeanByGroup <- function(df, group='')
 #' @return data frame
 #' @export
 #'
-CalMeanMotifSig <- function(seu, motifs='all', group='', split=FALSE)
+CalMeanMotifSig <- function(obj, motifs='all', group='', split=FALSE)
 {   
     d_motif <- NULL
 
     if (motifs == 'all'){
-        d_motif <- data.frame(t(seu@assays$chromvar@data))
+        d_motif <- data.frame(t(obj@assays$chromvar@data))
     } else {
         tar_motifs <- stringr::str_split(motifs, ',')[[1]]
-        d_motif <- data.frame(t(seu@assays$chromvar@data[tar_motifs,]))
+        d_motif <- data.frame(t(obj@assays$chromvar@data[tar_motifs,]))
     }
     #                               MA1615.1    MA1548.1    MA0163.1
     # H_02_2138_AAACAGCCAAGTGAAC.1  0.9646257  0.03137187  0.23462118
 
-    metadata <- seu@meta.data
+    metadata <- obj@meta.data
     d_motif[group] <- metadata[[group]][match(rownames(metadata), rownames(d_motif))]
 
     # calculare
@@ -73,8 +73,7 @@ CalMeanMotifSig <- function(seu, motifs='all', group='', split=FALSE)
             } else {
                 d_avg_score <- rbind(d_avg_score, dsub_score)
             }
-        }
-        
+        }   
     } else {
         d_avg_score <- CallMeanByGroup(d_motif, group)
     }

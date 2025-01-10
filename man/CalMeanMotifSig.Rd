@@ -2,16 +2,22 @@
 % Please edit documentation in R/motifs.R
 \name{CalMeanMotifSig}
 \alias{CalMeanMotifSig}
-\title{Annotations}
+\title{Calculate mean motif signal}
 \usage{
-CalMeanMotifSig(seu, motifs = "all", group = "")
+CalMeanMotifSig(obj, motifs = "all", group = "", split = FALSE)
 }
 \arguments{
+\item{group}{name}
+
+\item{split}{by sample name yes/no}
+
 \item{object}{anno}
+
+\item{motif}{ids}
 }
 \value{
-anotation
+data frame
 }
 \description{
-Annotations
+Calculate mean motif signal
 }
