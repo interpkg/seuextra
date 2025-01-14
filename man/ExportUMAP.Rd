@@ -4,7 +4,7 @@
 \alias{ExportUMAP}
 \title{Export UMAP}
 \usage{
-ExportUMAP(object, umap)
+ExportUMAP(seu_obj, umap)
 }
 \arguments{
 \item{reference}{anno}

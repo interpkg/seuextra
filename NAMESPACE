@@ -2,5 +2,8 @@
 
 export(CalMeanMotifSig)
 export(CallMeanByGroup)
+export(CustThemeOption1)
 export(ElbowPlot2)
 export(ExportUMAP)
+export(Seurat_FeaturePlot)
+import(ggplot2)
