@@ -17,7 +17,7 @@ CustThemeOption1 <- function()
             axis.line = element_line(colour = 'black', size = 0.3),
             axis.ticks = element_line(linewidth = 0.3),
             axis.ticks.length=unit(1, "mm"),
-            legend.key.width = unit(2, 'mm'),
+            legend.key.width = unit(3, 'mm'),
             legend.key.height = unit(3, 'mm')
         )
         
