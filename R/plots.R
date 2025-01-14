@@ -52,8 +52,8 @@ Seurat_FeaturePlot <- function(
     xlab='UMAP 1', 
     ylab='UMAP 2'
 ){
-    features <- str_split(features, ',')[[1]]
-    colorset <- str_split(colorset, ',')[[1]]
+    features <- stringr::str_split(features, ',')[[1]]
+    colorset <- stringr::str_split(colorset, ',')[[1]]
 
     p <- Seurat::FeaturePlot(object = obj, slot=slot, features = features, reduction = reduction, order=T, pt.size=0.01, cols=colorset)
     p <- p & CustThemeOption1() & labs(x =xlab, y = ylab) 
