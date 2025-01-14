@@ -11,9 +11,6 @@ ElbowPlot2(seu_obj, reduc = "pca")
 
 \item{group}{name}
 }
-\value{
-data frame
-}
 \description{
 Elbow Plot
 }

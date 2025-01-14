@@ -4,18 +4,16 @@
 \alias{ExportUMAP}
 \title{Export UMAP}
 \usage{
-ExportUMAP(seu_obj, umap)
+ExportUMAP(obj, umap)
 }
 \arguments{
-\item{reference}{anno}
+\item{obj}{seurat object}
+
+\item{umap}{str}
 }
 \value{
-anotation
+data frame
 }
 \description{
 Export UMAP
-}
-\examples{
-d_umap <- ExportUMAP(seu, 'wnn.umap')
-
 }

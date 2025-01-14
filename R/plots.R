@@ -8,8 +8,6 @@ NULL
 #' @param seurat object
 #' @param group name
 #'
-#' @return data frame
-#'
 #' @import ggplot2
 #'
 #' @export
@@ -41,7 +39,7 @@ ElbowPlot2 <- function(seu_obj, reduc='pca')
 #'
 #' @return data frame
 #'
-#' @import ggplot2
+#' @import stringr ggplot2
 #'
 #' @export
 #'

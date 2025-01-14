@@ -6,6 +6,7 @@
 #' @param data frame
 #' @param group name
 #' @return data frame
+#' @import dplyr
 #' @export
 #'
 CallMeanByGroup <- function(df, group='')
