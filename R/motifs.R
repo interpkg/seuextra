@@ -150,15 +150,15 @@ CalMeanMotifSig <- function(obj, motifs='all', group='', split=FALSE)
 #' @import dplyr
 #' @export
 #'
-CallSignalCountRatioByGroup <- function(df, columns, g1='', g2='', cutoff=0)
+CallSignalCountRatioByGroup <- function(df, columns, group='', subgroup='', cutoff=0)
 {   
-    if (g1 != '' & g2 != ''){
+    if (group != '' & g2 != ''){
         df <- df %>% 
-            group_by(.data[[g1]], .data[[g2]]) %>%
+            group_by(.data[[group]], .data[[subgroup]]) %>%
             summarise(across(columns, ~ sum(.x > cutoff )))
     } else {
         df <- df %>% 
-            group_by(.data[[g1]]) %>%
+            group_by(.data[[group]]) %>%
             summarise(across(columns, ~ sum(.x > cutoff )))
     }
     
@@ -179,7 +179,7 @@ CallSignalCountRatioByGroup <- function(df, columns, g1='', g2='', cutoff=0)
 #' @return data frame
 #' @export
 #'
-CalCellRatioForMotifSig <- function(obj, motifs='all', g1='', g2='', split=FALSE)
+CalCellRatioForMotifSig <- function(obj, motifs='all', group='', subgroup='', split=FALSE)
 {   
     d_motif <- ExtractMotifSigTranspose(obj, motifs, group)
 
@@ -201,7 +201,7 @@ CalCellRatioForMotifSig <- function(obj, motifs='all', g1='', g2='', split=FALSE
             print(paste0(s, ':', nrow(dsub)))
             dsub_score$orig.ident <- s
 
-            dsub_score <- CallSignalCountRatioByGroup(df=dsub, columns=motifs, g1=g1, g2=g2, cutoff=0)
+            dsub_score <- CallSignalCountRatioByGroup(df=dsub, columns=motifs, group=group, subgroup=subgroup, cutoff=0)
 
             if (i == 1){
                 d_final <- dsub_score

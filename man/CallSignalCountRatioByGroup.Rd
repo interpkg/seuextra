@@ -4,14 +4,14 @@
 \alias{CallSignalCountRatioByGroup}
 \title{Call count/ratio}
 \usage{
-CallSignalCountRatioByGroup(df, columns, g1 = "", g2 = "", cutoff = 0)
+CallSignalCountRatioByGroup(df, columns, group = "", subgroup = "", cutoff = 0)
 }
 \arguments{
 \item{df}{data}
 
-\item{cutoff}{signal cutoff}
-
 \item{group}{name}
+
+\item{cutoff}{signal cutoff}
 }
 \value{
 data frame
