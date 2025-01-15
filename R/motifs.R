@@ -85,7 +85,7 @@ CallMeanByGroup <- function(df, group='')
     # call means
     df <- df %>% 
             group_by(.data[[group]]) %>%
-            summarise(across(col_name, mean))
+            summarise(across(all_of(col_name), mean))
 
     df <- as.data.frame(df)
 
@@ -152,14 +152,14 @@ CalMeanMotifSig <- function(obj, motifs='all', group='', split=FALSE)
 #'
 CallSignalCountRatioByGroup <- function(df, columns, group='', subgroup='', cutoff=0)
 {   
-    if (group != '' & g2 != ''){
+    if (group != '' & subgroup != ''){
         df <- df %>% 
             group_by(.data[[group]], .data[[subgroup]]) %>%
-            summarise(across(columns, ~ sum(.x > cutoff )))
+            summarise(across(all_of(columns), ~ sum(.x > cutoff )))
     } else {
         df <- df %>% 
             group_by(.data[[group]]) %>%
-            summarise(across(columns, ~ sum(.x > cutoff )))
+            summarise(across(all_of(columns), ~ sum(.x > cutoff )))
     }
     
     df <- as.data.frame(df)
@@ -175,6 +175,7 @@ CallSignalCountRatioByGroup <- function(df, columns, group='', subgroup='', cuto
 #' @param object anno
 #' @param motif ids
 #' @param group name
+#' @param subgroup name
 #' @param split by sample name yes/no
 #' @return data frame
 #' @export
@@ -211,7 +212,7 @@ CalCellRatioForMotifSig <- function(obj, motifs='all', group='', subgroup='', sp
             }
         }   
     } else {
-        d_final <- CallMeanByGroup(d_motif, group)
+        d_final <- CallSignalCountRatioByGroup(df=d_motif, columns=motifs, group=group, subgroup=subgroup, cutoff=0)
     }
     
     return(d_final)

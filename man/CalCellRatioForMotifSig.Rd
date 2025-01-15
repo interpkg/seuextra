@@ -15,6 +15,8 @@ CalCellRatioForMotifSig(
 \arguments{
 \item{group}{name}
 
+\item{subgroup}{name}
+
 \item{split}{by sample name yes/no}
 
 \item{object}{anno}
