@@ -7,9 +7,9 @@
 CallMeanByGroup(df, group = "")
 }
 \arguments{
-\item{group}{name}
+\item{df}{data}
 
-\item{data}{frame}
+\item{group}{name}
 }
 \value{
 data frame

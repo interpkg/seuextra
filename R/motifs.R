@@ -1,9 +1,76 @@
 
 
 
+
+
+#' Extract motif signal
+#'
+#' @param obj data
+#' @param motifs ids
+#' 
+#' @return data frame
+#' @export
+#'
+ExtractMotifSig <- function(obj, motifs='all')
+{
+    d_motif <- NULL
+
+    if (motifs == 'all'){
+        d_motif <- data.frame(obj@assays$chromvar@data)
+    } else {
+        tar_motifs <- stringr::str_split(motifs, ',')[[1]]
+        d_motif <- data.frame(obj@assays$chromvar@data[tar_motifs,])
+    }
+
+    #           H_02_2138_AAACAGCCAAGTGAAC.1   H_02_2138_AAACAGCCAAGTGATT.1 
+    # MA1615.1   0.9646257  0.23462118
+    # MA1548.1   0.0100001  0.03137187
+
+    return(d_motif)
+}
+
+
+
+
+
+#' Extract motif signal
+#'
+#' @param obj data
+#' @param motifs ids
+#' @param group name
+#' 
+#' @return data frame
+#' @export
+#'
+ExtractMotifSigTranspose <- function(obj, motifs='all', group='')
+{
+    d_motif <- NULL
+
+    if (motifs == 'all'){
+        d_motif <- data.frame(t(obj@assays$chromvar@data))
+    } else {
+        tar_motifs <- stringr::str_split(motifs, ',')[[1]]
+        d_motif <- data.frame(t(obj@assays$chromvar@data[tar_motifs,]))
+    }
+
+    metadata <- obj@meta.data
+    d_motif$orig.ident <- metadata$orig.ident[match(rownames(metadata), rownames(d_motif))]
+    d_motif[group] <- metadata[[group]][match(rownames(metadata), rownames(d_motif))]
+
+    #                               MA1615.1    MA1548.1    MA0163.1   orig.ident  <group>
+    # H_02_2138_AAACAGCCAAGTGAAC.1  0.9646257  0.03137187  0.23462118   x             x
+
+    return(d_motif)
+}
+
+
+
+
+
+
 #' Call mean
 #'
-#' @param data frame
+#' @param df data
 #' @param group name
 #' @return data frame
 #' @import dplyr
@@ -13,7 +80,7 @@ CallMeanByGroup <- function(df, group='')
 { 
     # remove group name
     col_name <- colnames(df)
-    col_name <- col_name[ !col_name == group]
+    col_name <- col_name[ !col_name %in% c('orig.ident', group)]
 
     # call means
     df <- df %>% 
@@ -39,19 +106,7 @@ CallMeanByGroup <- function(df, group='')
 #'
 CalMeanMotifSig <- function(obj, motifs='all', group='', split=FALSE)
 {   
-    d_motif <- NULL
-
-    if (motifs == 'all'){
-        d_motif <- data.frame(t(obj@assays$chromvar@data))
-    } else {
-        tar_motifs <- stringr::str_split(motifs, ',')[[1]]
-        d_motif <- data.frame(t(obj@assays$chromvar@data[tar_motifs,]))
-    }
-    #                               MA1615.1    MA1548.1    MA0163.1
-    # H_02_2138_AAACAGCCAAGTGAAC.1  0.9646257  0.03137187  0.23462118
-
-    metadata <- obj@meta.data
-    d_motif[group] <- metadata[[group]][match(rownames(metadata), rownames(d_motif))]
+    d_motif <- ExtractMotifSigTranspose(obj, motifs, group)
 
     # calculare
     d_avg_score <- NULL
@@ -65,9 +120,9 @@ CalMeanMotifSig <- function(obj, motifs='all', group='', split=FALSE)
             cells <- rownames(metadata[metadata$orig.ident==s,])
             dsub <- d_motif[cells,]
             print(paste0(s, ':', nrow(dsub)))
-            dsub_score <- CallMeanByGroup(dsub, group)
             dsub_score$orig.ident <- s
-
+            dsub_score <- CallMeanByGroup(dsub, group)
+            
             if (i == 1){
                 d_avg_score <- dsub_score
                 i = 2
@@ -81,6 +136,89 @@ CalMeanMotifSig <- function(obj, motifs='all', group='', split=FALSE)
     
     return(d_avg_score)
 }
+
+
+
+
+
+#' Call count/ratio
+#'
+#' @param df data
+#' @param group name
+#' @param cutoff signal cutoff
+#' @return data frame
+#' @import dplyr
+#' @export
+#'
+CallSignalCountRatioByGroup <- function(df, columns, g1='', g2='', cutoff=0)
+{   
+    if (g1 != '' & g2 != ''){
+        df <- df %>% 
+            group_by(.data[[g1]], .data[[g2]]) %>%
+            summarise(across(columns, ~ sum(.x > cutoff )))
+    } else {
+        df <- df %>% 
+            group_by(.data[[g1]]) %>%
+            summarise(across(columns, ~ sum(.x > cutoff )))
+    }
+    
+    df <- as.data.frame(df)
+
+    return(df)
+}
+
+
+
+
+#' Calculate cell count/ratio for motif signal
+#'
+#' @param object anno
+#' @param motif ids
+#' @param group name
+#' @param split by sample name yes/no
+#' @return data frame
+#' @export
+#'
+CalCellRatioForMotifSig <- function(obj, motifs='all', g1='', g2='', split=FALSE)
+{   
+    d_motif <- ExtractMotifSigTranspose(obj, motifs, group)
+
+    if (motifs != 'all'){
+        motifs <- stringr::str_split(motifs, ',')[[1]]
+    }
+
+    # calculare
+    d_final <- NULL
+
+    if (split){
+        print(table(metadata$orig.ident))
+
+        sampleset <- unique(metadata$orig.ident)
+        i <- 1
+        for (s in sampleset){
+            cells <- rownames(metadata[metadata$orig.ident==s,])
+            dsub <- d_motif[cells,]
+            print(paste0(s, ':', nrow(dsub)))
+            dsub_score$orig.ident <- s
+
+            dsub_score <- CallSignalCountRatioByGroup(df=dsub, columns=motifs, g1=g1, g2=g2, cutoff=0)
+
+            if (i == 1){
+                d_final <- dsub_score
+                i = 2
+            } else {
+                d_final <- rbind(d_final, dsub_score)
+            }
+        }   
+    } else {
+        d_final <- CallMeanByGroup(d_motif, group)
+    }
+    
+    return(d_final)
+}
+
+
+
 
 
 
