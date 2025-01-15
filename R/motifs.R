@@ -1,8 +1,6 @@
 
 
 
-
-
 #' Extract motif signal
 #'
 #' @param obj data
@@ -67,7 +65,6 @@ ExtractMotifSigTranspose <- function(obj, motifs='all', group='')
 
 
 
-
 #' Call mean
 #'
 #' @param df data
@@ -104,35 +101,12 @@ CallMeanByGroup <- function(df, group='')
 #' @return data frame
 #' @export
 #'
-CalMeanMotifSig <- function(obj, motifs='all', group='', split=FALSE)
+CalMeanMotifSig <- function(obj, motifs='all', group='')
 {   
     d_motif <- ExtractMotifSigTranspose(obj, motifs, group)
 
     # calculare
-    d_avg_score <- NULL
-
-    if (split){
-        print(table(metadata$orig.ident))
-
-        sampleset <- unique(metadata$orig.ident)
-        i <- 1
-        for (s in sampleset){
-            cells <- rownames(metadata[metadata$orig.ident==s,])
-            dsub <- d_motif[cells,]
-            print(paste0(s, ':', nrow(dsub)))
-            dsub_score$orig.ident <- s
-            dsub_score <- CallMeanByGroup(dsub, group)
-            
-            if (i == 1){
-                d_avg_score <- dsub_score
-                i = 2
-            } else {
-                d_avg_score <- rbind(d_avg_score, dsub_score)
-            }
-        }   
-    } else {
-        d_avg_score <- CallMeanByGroup(d_motif, group)
-    }
+    d_avg_score <- CallMeanByGroup(d_motif, group)
     
     return(d_avg_score)
 }
@@ -180,7 +154,7 @@ CallSignalCountRatioByGroup <- function(df, columns, group='', subgroup='', cuto
 #' @return data frame
 #' @export
 #'
-CalCellRatioForMotifSig <- function(obj, motifs='all', group='', subgroup='', split=FALSE)
+CalCellRatioForMotifSig <- function(obj, motifs='all', group='', subgroup='')
 {   
     d_motif <- ExtractMotifSigTranspose(obj, motifs, group)
 
@@ -189,31 +163,7 @@ CalCellRatioForMotifSig <- function(obj, motifs='all', group='', subgroup='', sp
     }
 
     # calculare
-    d_final <- NULL
-
-    if (split){
-        print(table(metadata$orig.ident))
-
-        sampleset <- unique(metadata$orig.ident)
-        i <- 1
-        for (s in sampleset){
-            cells <- rownames(metadata[metadata$orig.ident==s,])
-            dsub <- d_motif[cells,]
-            print(paste0(s, ':', nrow(dsub)))
-            dsub_score$orig.ident <- s
-
-            dsub_score <- CallSignalCountRatioByGroup(df=dsub, columns=motifs, group=group, subgroup=subgroup, cutoff=0)
-
-            if (i == 1){
-                d_final <- dsub_score
-                i = 2
-            } else {
-                d_final <- rbind(d_final, dsub_score)
-            }
-        }   
-    } else {
-        d_final <- CallSignalCountRatioByGroup(df=d_motif, columns=motifs, group=group, subgroup=subgroup, cutoff=0)
-    }
+    d_final <- CallSignalCountRatioByGroup(df=d_motif, columns=motifs, group=group, subgroup=subgroup, cutoff=0)
     
     return(d_final)
 }
