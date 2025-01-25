@@ -1,4 +1,4 @@
-#' @include plot_basic.R
+#' @include plot_parameter.R
 #'
 NULL
 
@@ -50,12 +50,16 @@ Seurat_FeaturePlot <- function(
     features=NULL, 
     colorset='lightgrey,red',
     xlab='UMAP 1', 
-    ylab='UMAP 2'
+    ylab='UMAP 2',
+    min_cutoff = NA,
+    max_cutoff = NA
 ){
     features <- stringr::str_split(features, ',')[[1]]
     colorset <- stringr::str_split(colorset, ',')[[1]]
 
-    p <- Seurat::FeaturePlot(object = obj, slot=slot, features = features, reduction = reduction, order=T, pt.size=0.01, cols=colorset)
+    p <- Seurat::FeaturePlot(object = obj, slot=slot, features = features, 
+            reduction = reduction, order=T, pt.size=0.01, cols=colorset,
+            min.cutoff=min_cutoff, max.cutoff=max_cutoff)
     p <- p & CustThemeOption1() & labs(x =xlab, y = ylab) 
             
     return(p)

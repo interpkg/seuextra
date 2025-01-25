@@ -18,5 +18,5 @@ Encoding: UTF-8
 Collate: 
     'export.R'
     'motifs.R'
-    'plot_basic.R'
+    'plot_parameter.R'
     'plots.R'

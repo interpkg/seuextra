@@ -11,7 +11,9 @@ Seurat_FeaturePlot(
   features = NULL,
   colorset = "lightgrey,red",
   xlab = "UMAP 1",
-  ylab = "UMAP 2"
+  ylab = "UMAP 2",
+  min_cutoff = NA,
+  max_cutoff = NA
 )
 }
 \arguments{
