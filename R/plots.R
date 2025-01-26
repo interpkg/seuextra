@@ -5,8 +5,8 @@ NULL
 
 #' Elbow Plot
 #'
-#' @param seurat object
-#' @param group name
+#' @param obj object
+#' @param reduc name
 #'
 #' @import ggplot2
 #'
@@ -14,15 +14,16 @@ NULL
 #'
 #' @examples
 #' library(Seurat)
-#' ElbowPlot2(seu_obj = pbmc_small, reduc='pca')
+#' p <- ElbowPlot2(seu_obj = pbmc_small, reduc='pca')
 #'
-ElbowPlot2 <- function(seu_obj, reduc='pca')
+ElbowPlot2 <- function(obj, reduc='pca')
 { 
-    p <- Seurat::ElbowPlot(seu_obj, ndims = 50, reduction = reduc)
+    p <- Seurat::ElbowPlot(obj, ndims = 50, reduction = reduc)
     p <- p & geom_hline(yintercept=1, linetype="dashed", color = "blue")
     p <- p & geom_hline(yintercept=2, linetype="dashed", color = "orange")
     p <- p & geom_hline(yintercept=3, linetype="dashed", color = "red")
-    ggplot2::ggsave(paste0('ElbowPlot.', reduc, '.pdf'), w=4, h=2.5)
+    
+    p
 }
 
 
@@ -34,8 +35,8 @@ ElbowPlot2 <- function(seu_obj, reduc='pca')
 
 #' Seurat FeaturePlot
 #'
-#' @param seurat object
-#' @param feature name
+#' @param obj object
+#' @param features gene name
 #'
 #' @return data frame
 #'

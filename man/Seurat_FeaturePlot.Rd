@@ -17,9 +17,9 @@ Seurat_FeaturePlot(
 )
 }
 \arguments{
-\item{seurat}{object}
+\item{obj}{object}
 
-\item{feature}{name}
+\item{features}{gene name}
 }
 \value{
 data frame

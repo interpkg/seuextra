@@ -4,18 +4,18 @@
 \alias{ElbowPlot2}
 \title{Elbow Plot}
 \usage{
-ElbowPlot2(seu_obj, reduc = "pca")
+ElbowPlot2(obj, reduc = "pca")
 }
 \arguments{
-\item{seurat}{object}
+\item{obj}{object}
 
-\item{group}{name}
+\item{reduc}{name}
 }
 \description{
 Elbow Plot
 }
 \examples{
 library(Seurat)
-ElbowPlot2(seu_obj = pbmc_small, reduc='pca')
+p <- ElbowPlot2(seu_obj = pbmc_small, reduc='pca')
 
 }
