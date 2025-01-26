@@ -1,5 +1,5 @@
 Package: seuextra
-Version: 0.1.0
+Version: 0.1.1
 Title: Seurat/Signac analysis functions
 Description: This package for downstream data analysis.
 Author: Hua Sun [aut,cre]
@@ -15,8 +15,3 @@ Imports:
     stringr
 RoxygenNote: 7.3.2
 Encoding: UTF-8
-Collate: 
-    'export.R'
-    'motifs.R'
-    'plot_parameter.R'
-    'plots.R'
