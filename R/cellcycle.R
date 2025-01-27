@@ -68,7 +68,7 @@ CC_SignalUMAP_perSample <- function(df, sorted_sample='', label_name='Cell-Cycle
     if (nchar(sorted_sample) > 2){ 
         df$Sample <- factor(df$Sample, levels=sorted_sample) 
     }
-    print(head(df))
+    
     p <- ggplot(df,aes(x=UMAP_1, y=UMAP_2, color=group)) + 
             geom_point(size=0.2) +
             theme_classic(base_line_size=0.2) +
@@ -104,7 +104,7 @@ CC_Barplot_nonCyclining <- function(df){
     # 2.
     table <- df %>% count(clusters, group, sort = TRUE)
     colnames(table) <- c('clusters', 'group', 'n')
-    print(head(table))
+    print(head(table, n=3))
     
     #colors <- c("> 0.2"="#CB4335", "0.1-0.2"="#2E86C1", "< 0.1"="#D7DBDD")
     colors <- c("Cycling"="#CB4335", "Intermediate"="#F5B7B1", "Non-cycling"="#D7DBDD")

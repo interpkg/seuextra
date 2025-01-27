@@ -4,18 +4,22 @@
 \alias{CalCellRatioForMotifSig}
 \title{Calculate cell count/ratio for motif signal}
 \usage{
-CalCellRatioForMotifSig(obj, motifs = "all", group = "", subgroup = "")
+CalCellRatioForMotifSig(
+  obj,
+  motifs = "all",
+  group = "",
+  sample_group = "",
+  cutoff = 0
+)
 }
 \arguments{
 \item{group}{name}
-
-\item{subgroup}{name}
 
 \item{object}{anno}
 
 \item{motif}{ids}
 
-\item{split}{by sample name yes/no}
+\item{subgroup}{name}
 }
 \value{
 data frame
