@@ -144,46 +144,6 @@ CalSignalCountByGroup <- function(df, columns, group='', subgroup='', cutoff=0)
 
 
 
-#' Test Calculate cell count/ratio for motif signal
-#'
-#' @param object anno
-#' @param motif ids
-#' @param group name
-#' @param subgroup name
-#' @return data frame
-#' @export
-#'
-CalCellRatioForMotifSig_test <- function(obj, motifs='all', group='', sample_group='', cutoff=0)
-{   
-    d_motif <- ExtractMotifSigTranspose(obj, motifs, group)
-
-    if (motifs != 'all'){
-        motifs <- stringr::str_split(motifs, ',')[[1]]
-    }
-
-    # calculare count
-    d_final <- CalSignalCountByGroup(df=d_motif, columns=motifs, group=group, subgroup=sample_group, cutoff=cutoff)
-    #cell_type2  orig.ident  MA1615.1    MA1548.1
-    #CycProg-Like    M_EPN_IUE0  114 112
-    #CycProg-Like    M_EPN_IUE1  193 198
-
-    # calculare ratio
-    d_ratio <- d_final[, c(group, sample_group)]
-    for (x in motifs){
-        d_temp <- d_final %>%
-                group_by(.data[[sample_group]]) %>%
-                mutate(percentage = round(.data[[x]] / sum(.data[[x]]) * 100, 2))
-        d_ratio[[x]] <- d_temp$percentage
-    }
-    
-    return(d_ratio)
-}
-
-
-
-
-
-
 #' Calculate cell count/ratio for motif signal
 #'
 #' @param object anno
