@@ -179,7 +179,7 @@ CalCellRatioForMotifSig <- function(obj, motifs='all', group='', sample_group=''
     colnames(d_totalCells) <- c(sample_group, 'sample_cells')
 
     d_ratio <- merge(d_totalCellTypeCount, d_totalCells, by=sample_group, all.x=T)
-    d_ratio <- merge(d_totalCellTypeCount, d_long, by=c(sample_group, group), all.x=T)
+    d_ratio <- merge(d_ratio, d_long, by=c(sample_group, group), all.x=T)
 
     # calculare ratio
     d_ratio$motifSig_ratio <- round(d_ratio$motifSig_count / d_ratio$sample_cells * 100, 2)
