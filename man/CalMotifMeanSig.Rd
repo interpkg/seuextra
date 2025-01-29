@@ -7,13 +7,11 @@
 CalMotifMeanSig(obj, motifs = "all", group = "")
 }
 \arguments{
+\item{obj}{anno}
+
 \item{group}{name}
 
-\item{object}{anno}
-
 \item{motif}{ids}
-
-\item{split}{by sample name yes/no}
 }
 \value{
 data frame

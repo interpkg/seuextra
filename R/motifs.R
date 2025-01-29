@@ -94,10 +94,9 @@ CalMeanByGroup <- function(df, group='')
 
 #' Calculate mean motif signal
 #'
-#' @param object anno
+#' @param obj anno
 #' @param motif ids
 #' @param group name
-#' @param split by sample name yes/no
 #' @return data frame
 #' @export
 #'
@@ -146,10 +145,10 @@ CalSignalCountByGroup <- function(df, columns, group='', subgroup='', cutoff=0)
 
 #' Calculate cell count/ratio for motif signal
 #'
-#' @param object anno
+#' @param obj anno
 #' @param motif ids
 #' @param group name
-#' @param subgroup name
+#' @param sample_group name
 #' @return data frame
 #' @export
 #'
@@ -195,14 +194,14 @@ CalCellRatioForMotifSig <- function(obj, motifs='all', group='', sample_group=''
 
 #' Motif find markers
 #'
-#' @param object anno
-#' @param motif ids
-#' @param group name
-#' @param subgroup name
+#' @param obj object
+#' @param query name
+#' @param avg_fc cutoff avg_diff
+#' @param pct_1 cutoff pct.1
 #' @return data frame
 #' @export
 #'
-Motif_FindMarkers <- function(obj, query='', avg_fc = 1, cutoff_pct1=0.2, cutoff_diff_pct=0.1)
+Motif_FindMarkers <- function(obj, query='', avg_fc=1, pct_1=0.2)
 { 
     DefaultAssay(obj) <- 'chromvar'
 
@@ -219,7 +218,7 @@ Motif_FindMarkers <- function(obj, query='', avg_fc = 1, cutoff_pct1=0.2, cutoff
     )
 
     d_markers$diff_pct <- d_markers$pct.1 - d_markers$pct.2
-    d_filtered <- dplyr::filter(d_markers, avg_diff>avg_fc & p_val_adj<0.005 & pct.1>cutoff_pct1 & diff_pct>cutoff_diff_pct)
+    d_filtered <- dplyr::filter(d_markers, avg_diff > avg_fc & p_val_adj<0.005 & pct.1 > pct_1 & diff_pct > 0)
 
     return(d_filtered)
 }

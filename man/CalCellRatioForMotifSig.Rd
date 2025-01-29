@@ -13,13 +13,13 @@ CalCellRatioForMotifSig(
 )
 }
 \arguments{
+\item{obj}{anno}
+
 \item{group}{name}
 
-\item{object}{anno}
+\item{sample_group}{name}
 
 \item{motif}{ids}
-
-\item{subgroup}{name}
 }
 \value{
 data frame
