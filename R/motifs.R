@@ -193,6 +193,37 @@ CalCellRatioForMotifSig <- function(obj, motifs='all', group='', sample_group=''
 
 
 
+#' Motif find markers
+#'
+#' @param object anno
+#' @param motif ids
+#' @param group name
+#' @param subgroup name
+#' @return data frame
+#' @export
+#'
+Motif_FindMarkers <- function(obj, query='', avg_fc = 1, cutoff_pct1=0.2, cutoff_diff_pct=0.1)
+{ 
+    DefaultAssay(obj) <- 'chromvar'
+
+    all_items <- levels(obj)
+    bkg <- all_items[!all_items %in% query]
+
+    d_markers <- Seurat::FindMarkers(
+      object = obj,
+      ident.1 = query,
+      ident.2 = bgk,
+      only.pos = TRUE,
+      mean.fxn = rowMeans,
+      fc.name = "avg_diff"
+    )
+
+    d_markers$diff_pct <- d_markers$pct.1 - d_markers$pct.2
+    d_filtered <- dplyr::filter(d_markers, avg_diff>avg_fc & p_val_adj<0.005 & pct.1>cutoff_pct1 & diff_pct>cutoff_diff_pct)
+
+    return(d_filtered)
+}
+
 
 
 
