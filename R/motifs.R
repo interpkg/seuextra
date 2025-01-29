@@ -211,13 +211,21 @@ CalCellRatioForMotifSig <- function(obj, motifs='all', group='', sample_group=''
     d_long <- d_count %>% tidyr::pivot_longer(cols=motifs, names_to='motifs', values_to='motifSig_count')
     #cell_type2  orig.ident  motifs    motifSig_count
 
-    # total cell count of cell type
-    d_totalCount <- data.frame(table(obj@meta.data[,c(sample_group, group)]))
-    colnames(d_totalCount) <- c(sample_group, group, 'total_count')
-    d_ratio <- merge(d_totalCount, d_long, by=c(sample_group, group), all.x=T)
+    # total cell count of cell typ
+    d_totalCellTypeCount <- data.frame(table(obj@meta.data[,c(sample_group, group)]))
+    colnames(d_totalCellTypeCount) <- c(sample_group, group, 'ct_cells')
+
+    d_totalCells <- data.frame(table(obj@meta.data[[sample_group]]))
+    colnames(d_totalCells) <- c(sample_group, 'sample_cells')
+
+    d_ratio <- merge(d_totalCellTypeCount, d_totalCells, by=sample_group, all.x=T)
+    d_ratio <- merge(d_totalCellTypeCount, d_long, by=c(sample_group, group), all.x=T)
 
     # calculare ratio
-    d_ratio$motifSig_ratio <- round(d_ratio$motifSig_count / d_ratio$total_count * 100, 2)
+    d_ratio$motifSig_ratio <- round(d_ratio$motifSig_count / d_ratio$sample_cells * 100, 2)
+    d_ratio$ct_motifSig_ratio <- round(d_ratio$motifSig_count / d_ratio$ct_cells * 100, 2)
+    d_ratio$ct_ratio <- round(d_ratio$ct_cells / d_ratio$sample_cells * 100, 2)
+    #cell_type2  orig.ident  ct_cells sample_cells motifs motifSig_count motifSig_ratio  ct_motifSig_ratio ct_ratio
     
     return(d_ratio)
 }
