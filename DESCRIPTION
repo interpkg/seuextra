@@ -11,6 +11,7 @@ Imports:
     Seurat (>= 4.3.0),
     Signac,
     dplyr,
+    tidyr,
     ggplot2,
     stringr,
     gprofiler2
