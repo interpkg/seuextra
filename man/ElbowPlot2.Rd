@@ -14,8 +14,3 @@ ElbowPlot2(obj, reduc = "pca")
 \description{
 Elbow Plot
 }
-\examples{
-library(Seurat)
-p <- ElbowPlot2(seu_obj = pbmc_small, reduc='pca')
-
-}

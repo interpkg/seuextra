@@ -12,10 +12,6 @@ NULL
 #'
 #' @export
 #'
-#' @examples
-#' library(Seurat)
-#' p <- ElbowPlot2(seu_obj = pbmc_small, reduc='pca')
-#'
 ElbowPlot2 <- function(obj, reduc='pca')
 { 
     p <- Seurat::ElbowPlot(obj, ndims = 50, reduction = reduc)
