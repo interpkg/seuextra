@@ -212,7 +212,7 @@ Motif_FindMarkers <- function(obj, query='', avg_fc = 1, cutoff_pct1=0.2, cutoff
     d_markers <- Seurat::FindMarkers(
       object = obj,
       ident.1 = query,
-      ident.2 = bgk,
+      ident.2 = bkg,
       only.pos = TRUE,
       mean.fxn = rowMeans,
       fc.name = "avg_diff"
