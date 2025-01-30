@@ -42,6 +42,7 @@ ElbowPlot2 <- function(obj, reduc='pca')
 #'
 Seurat_FeaturePlot <- function(
     obj=NULL, 
+    item='',
     slot="data", 
     reduction='umap', 
     features=NULL, 
