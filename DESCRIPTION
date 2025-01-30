@@ -17,11 +17,4 @@ Imports:
     gprofiler2
 RoxygenNote: 7.3.2
 Encoding: UTF-8
-Collate: 
-    'basic.R'
-    'cellcycle.R'
-    'export.R'
-    'motifs.R'
-    'plot_parameter.R'
-    'plots.R'
-    'score.R'
+
