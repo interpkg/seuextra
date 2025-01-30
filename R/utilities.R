@@ -66,7 +66,7 @@ GenxFindAllMarkers <- function(obj, assay_use='SCT', idents='seurat_clusters', l
     diff_exp$gene <- rownames(diff_exp)
     diff_exp$gene[diff_exp$gene %in% wrong_gene_name] <- str_sub(diff_exp$gene[diff_exp$gene %in% wrong_gene_name], end = -2)
 
-    return(diff_exps)
+    return(diff_exp)
 }
 
 
