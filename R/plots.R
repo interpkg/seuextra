@@ -46,6 +46,7 @@ Seurat_FeaturePlot <- function(
     reduction='umap', 
     features=NULL, 
     colorset='lightgrey,red',
+    title = '',
     xlab='UMAP 1', 
     ylab='UMAP 2',
     min_cutoff = NA,
@@ -54,14 +55,25 @@ Seurat_FeaturePlot <- function(
     features <- stringr::str_split(features, ',')[[1]]
     colorset <- stringr::str_split(colorset, ',')[[1]]
 
+    if (item == motif){
+        colorset <- c("lightgrey", "#FAAD61", "#BA2724")
+        min_cutoff = 'q10'
+        max_cutoff = 'q90'
+    }
+
     p <- Seurat::FeaturePlot(object = obj, slot=slot, features = features, 
             reduction = reduction, order=T, pt.size=0.01, cols=colorset,
             min.cutoff=min_cutoff, max.cutoff=max_cutoff)
-    p <- p & CustThemeOption1() & labs(x =xlab, y = ylab) 
+
+    if (item == 'motif'){
+        p <- p & CustThemeOption2() & labs(x =xlab, y = ylab) & ggtitle(title)
+    } else {
+        p <- p & CustThemeOption1() & labs(x =xlab, y = ylab)
+    }
+    
             
     return(p)
 }
-
 
 
 

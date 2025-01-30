@@ -201,7 +201,7 @@ CalCellRatioForMotifSig <- function(obj, motifs='all', group='', sample_group=''
 #' @return data frame
 #' @export
 #'
-Motif_FindMarkers <- function(obj, query='', avg_fc=1, pct_1=0.2)
+Motif_FindMarkers <- function(obj, query='', avg_fc=.585, pct_1=0.2)
 { 
     DefaultAssay(obj) <- 'chromvar'
 
