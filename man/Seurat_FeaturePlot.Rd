@@ -6,6 +6,7 @@
 \usage{
 Seurat_FeaturePlot(
   obj = NULL,
+  item = "",
   slot = "data",
   reduction = "umap",
   features = NULL,
