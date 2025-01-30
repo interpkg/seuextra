@@ -56,7 +56,7 @@ Seurat_FeaturePlot <- function(
     features <- stringr::str_split(features, ',')[[1]]
     colorset <- stringr::str_split(colorset, ',')[[1]]
 
-    if (item == motif){
+    if (item == 'motif'){
         colorset <- c("lightgrey", "#FAAD61", "#BA2724")
         min_cutoff = 'q10'
         max_cutoff = 'q90'
