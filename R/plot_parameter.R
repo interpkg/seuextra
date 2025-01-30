@@ -28,33 +28,6 @@ CustThemeOption1 <- function()
 
 
 
-#' ggplot2 theme setting 2
-#'
-#' @return plot
-#'
-#' @import ggplot2
-#'
-#' @export
-#'
-CustThemeOption2 <- function()
-{
-    p <- theme(plot.title = element_text(size = 10),
-                text=element_text(size=8), 
-                axis.text=element_text(size=6),
-                axis.line = element_line(colour = 'black', size = 0.3),
-                axis.ticks = element_line(linewidth = 0.3),
-                axis.ticks.length=unit(1, "mm"),
-                legend.key.width = unit(4, 'mm'),
-                axis.text.x=element_blank(),
-                axis.text.y=element_blank(),
-                axis.ticks.x=element_blank(),
-                axis.ticks.y=element_blank()
-        )
-
-    p
-}            
-
-
 
 
 

@@ -57,7 +57,7 @@ Seurat_FeaturePlot <- function(
     colorset <- stringr::str_split(colorset, ',')[[1]]
 
     if (item == 'motif'){
-        colorset <- c("lightgrey", "#FAAD61", "#BA2724")
+        colorset <- c("#E0E0E0", "#FAAD61", "#BA2724")
         min_cutoff = 'q10'
         max_cutoff = 'q90'
     }
@@ -66,13 +66,8 @@ Seurat_FeaturePlot <- function(
             reduction = reduction, order=T, pt.size=0.01, cols=colorset,
             min.cutoff=min_cutoff, max.cutoff=max_cutoff)
 
-    if (item == 'motif'){
-        p <- p & CustThemeOption2() & labs(x =xlab, y = ylab) & ggtitle(title)
-    } else {
-        p <- p & CustThemeOption1() & labs(x =xlab, y = ylab)
-    }
-    
-            
+    p <- p & CustThemeOption1() & labs(title=title, x =xlab, y = ylab)
+     
     return(p)
 }
 
