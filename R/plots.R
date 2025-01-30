@@ -42,11 +42,10 @@ ElbowPlot2 <- function(obj, reduc='pca')
 #'
 Seurat_FeaturePlot <- function(
     obj=NULL, 
-    item='',
     slot="data", 
     reduction='umap', 
     features=NULL, 
-    colorset='lightgrey,red',
+    colorset='#E0E0E0,red',
     title = '',
     xlab='UMAP 1', 
     ylab='UMAP 2',
@@ -55,12 +54,6 @@ Seurat_FeaturePlot <- function(
 ){
     features <- stringr::str_split(features, ',')[[1]]
     colorset <- stringr::str_split(colorset, ',')[[1]]
-
-    if (item == 'motif'){
-        colorset <- c("#E0E0E0", "#FAAD61", "#BA2724")
-        min_cutoff = 'q10'
-        max_cutoff = 'q90'
-    }
 
     p <- Seurat::FeaturePlot(object = obj, slot=slot, features = features, 
             reduction = reduction, order=T, pt.size=0.01, cols=colorset,
