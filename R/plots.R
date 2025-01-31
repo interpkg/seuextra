@@ -238,9 +238,9 @@ Seurat_DimPlot2 <- function(obj=NULL,
                 panel.grid.minor = element_blank(),
                 axis.line = element_blank()) +
             # x
-            annotation_custom(grob = grid::linesGrob(), xmin = xmin*1.3, xmax = xmin + abs(xmin)*0.8, ymin = ymin*1.15, ymax = ymin*1.15) +
+            annotation_custom(grob = grid::linesGrob(), xmin = xmin, xmax = xmin + abs(xmin)*0.3, ymin = ymin, ymax = ymin) +
             # y
-            annotation_custom(grob = grid::linesGrob(), xmin = xmin*1.3, xmax = xmin*1.3, ymin = ymin*1.15, ymax = ymin + abs(ymin)*0.8) +
+            annotation_custom(grob = grid::linesGrob(), xmin = xmin, xmax = xmin, ymin = ymin, ymax = ymin + abs(ymin)*0.3) +
             coord_cartesian(xlim=c(xmin, xmax), ylim = c(ymin, ymax), clip = "off") +
             theme(axis.title = element_text(hjust = 0))
 
