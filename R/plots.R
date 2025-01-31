@@ -200,7 +200,7 @@ Seurat_DimPlot <- function(obj=NULL,
 #'
 #' @return plot
 #'
-#' @import ggplot2
+#' @import ggplot2 patchwork
 #'
 #' @export
 #'
@@ -216,7 +216,7 @@ Seurat_DimPlot2 <- function(obj=NULL,
         p <- p + scale_color_manual(values=colors)
     }
     
-    p <- p + plot_layout(guides = "collect") & 
+    p <- p + patchwork::plot_layout(guides = "collect") & 
             theme(plot.title = element_text(size = 10),
                 text=element_text(size=8), 
                 axis.text=element_text(size=6)) &
