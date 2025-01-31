@@ -13,7 +13,10 @@ Seurat_DimPlot2(
   y_lab = "UMAP 2",
   colors = "",
   label = FALSE,
-  repel = TRUE
+  xa = 1.2,
+  xb = 0.3,
+  ya = 1.1,
+  yb = 0.25
 )
 }
 \arguments{

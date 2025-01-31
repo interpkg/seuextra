@@ -207,10 +207,11 @@ Seurat_DimPlot <- function(obj=NULL,
 Seurat_DimPlot2 <- function(obj=NULL,
     reduction='umap', group_by='cell_type2',
     title='', x_lab='UMAP 1', y_lab='UMAP 2',
-    colors='', label=FALSE, repel=TRUE
+    colors='', label=FALSE,
+    xa=1.2, xb=.3, ya=1.1, yb=.25
 ){
 
-    p <- Seurat::DimPlot(obj, reduction=reduction, group.by=group_by, label.size=3, label=label, pt.size=0.01, repel=repel)
+    p <- Seurat::DimPlot(obj, reduction=reduction, group.by=group_by, label.size=3, label=label, pt.size=0.01)
     
     p <- p + patchwork::plot_layout(guides = "collect") & 
             theme(plot.title = element_text(size = 10),
@@ -221,7 +222,7 @@ Seurat_DimPlot2 <- function(obj=NULL,
                 axis.ticks=element_blank()) &
             labs(title=title, x = x_lab, y = y_lab) 
 
-    if (length(colors) > 2){
+    if (length(colors) > 1){
         p <- p + scale_color_manual(values=colors)
     }
 
@@ -238,15 +239,14 @@ Seurat_DimPlot2 <- function(obj=NULL,
                 panel.grid.minor = element_blank(),
                 axis.line = element_blank()) +
             # x
-            annotation_custom(grob = grid::linesGrob(), xmin = xmin*0.8, xmax = xmin + abs(xmin)*0.8, ymin = ymin, ymax = ymin) +
+            annotation_custom(grob = grid::linesGrob(), xmin = xmin*xa, xmax = xmin + abs(xmin)*xb, ymin = ymin*ya, ymax = ymin*ya) +
             # y
-            annotation_custom(grob = grid::linesGrob(), xmin = xmin*0.8, xmax = xmin*0.8, ymin = ymin*0.8, ymax = ymin + abs(ymin)*0.8) +
+            annotation_custom(grob = grid::linesGrob(), xmin = xmin*xa, xmax = xmin*xa, ymin = ymin*ya, ymax = ymin + abs(ymin)*yb) +
             coord_cartesian(xlim=c(xmin, xmax), ylim = c(ymin, ymax), clip = "off") +
             theme(axis.title = element_text(hjust = 0))
 
     return(p)
 }
-
 
 
 
