@@ -200,7 +200,7 @@ Seurat_DimPlot <- function(obj=NULL,
 #'
 #' @return plot
 #'
-#' @import ggplot2 patchwork
+#' @import ggplot2 patchwork grid
 #'
 #' @export
 #'
@@ -239,9 +239,9 @@ Seurat_DimPlot2 <- function(obj=NULL,
                 panel.grid.minor = element_blank(),
                 axis.line = element_blank()) +
             # x
-            annotation_custom(grob = linesGrob(), xmin = xmin*1.5, xmax = 0.8, ymin = ymin*1.3, ymax = ymin*1.3) +
+            annotation_custom(grob = grid::linesGrob(), xmin = xmin*1.5, xmax = 0.8, ymin = ymin*1.3, ymax = ymin*1.3) +
             # y
-            annotation_custom(grob = linesGrob(), xmin = xmin*1.5, xmax = xmin*1.5, ymin = ymin*1.3, ymax = 0) +
+            annotation_custom(grob = grid::linesGrob(), xmin = xmin*1.5, xmax = xmin*1.5, ymin = ymin*1.3, ymax = 0) +
             coord_cartesian(xlim=c(xmin, xmax), ylim = c(ymin, ymax), clip = "off") +
             theme(axis.title = element_text(hjust = 0))
 
