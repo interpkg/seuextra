@@ -10,6 +10,7 @@ Depends:
 Imports:
     Seurat (>= 4.3.0),
     Signac,
+    scCustomize,
     dplyr,
     tidyr,
     ggplot2,
