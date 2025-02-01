@@ -180,7 +180,7 @@ scCustomize_DotPlotMarkers <- function(obj=NULL, group='', d_markers='', n=5){
     sorted_name <- as.vector(sorted_name$cluster_plus[order(as.numeric(sorted_name$seurat_clusters))])
 
     obj@meta.data <- meta
-    p <- scCustomize::Clustered_DotPlot(seurat_object = obj, features = marker_genes, k = group_size, group.by = 'cluster_plus')
+    p <- scCustomize::Clustered_DotPlot(seurat_object = obj, features = marker_genes, k = group_size, group.by = 'cluster_plus', plot_km_elbow=FALSE)
 
     return(p)
 }
