@@ -168,7 +168,9 @@ scCustomize_ClusteredDotPlot <- function(obj=NULL, group='', d_markers='', n=7){
             group_by = group, rank_by = "avg_log2FC",
             named_vector = FALSE, make_unique = TRUE)
     
-    p <- scCustomize::Clustered_DotPlot(seurat_object = obj, features = top_markers, group.by = group, k = group_size, plot_km_elbow=FALSE)
+    p <- scCustomize::Clustered_DotPlot(seurat_object = obj, features = top_markers, group.by = group, 
+            row_label_size = 6, column_label_size = 8, legend_label_size = 6, legend_title_size = 8,
+            k = group_size, plot_km_elbow=FALSE)
 
     return(p)
 }
@@ -217,7 +219,6 @@ Seurat_DotPlotMarkers <- function(obj=NULL, assay_use='SCT', d_markers=NULL, n=5
                 text=element_text(size=7), 
                 axis.text=element_text(colour="black", size=7), 
                 axis.title.x=element_blank()) +
-            labs(y="") +
             theme(
                     legend.position="bottom", 
                     legend.key.width = unit(4, 'mm'),
