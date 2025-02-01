@@ -90,10 +90,6 @@ Seurat_FeaturePlot <- function(
 
 
 
-
-#%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% scCustomize
-
-
 #' scCustom FeaturePlot
 #'
 #' #gene exp: colors_use = viridis_inferno_dark_high
@@ -146,6 +142,107 @@ scCustom_FeaturePlot <- function(
 
     return(p)
 }
+
+
+
+
+#%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+#  Dot Plot
+#%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+#' scCustomize DotPlotMarkers 
+#'
+#' @param obj object
+#' @param group
+#'
+#' @return plot
+#'
+#' @import ggplot2
+#'
+#' @export
+#'
+scCustomize_DotPlotMarkers <- function(obj=NULL, group='', d_markers='', n=5){
+
+    topX.markers <- data.frame(d_markers %>% dplyr::group_by(cluster) %>% dplyr::slice(1:n))
+    marker_genes <- unique(topX.markers$gene)
+
+    group_size <- length(unique(obj[[group]]))
+
+    meta <- obj@meta.data
+
+    if (group != ''){
+        meta$cluster_plus <- paste0('C', meta$seurat_clusters, '.', meta[[group]])
+    } else {
+        meta$cluster_plus <- paste0('C', meta$seurat_clusters)
+    }
+
+    sorted_name <- unique(meta[,c('seurat_clusters', 'cluster_plus')])
+    sorted_name <- as.vector(sorted_name$cluster_plus[order(as.numeric(sorted_name$seurat_clusters))])
+
+    obj@meta.data <- meta
+    p <- scCustomize::Clustered_DotPlot(seurat_object = obj, features = marker_genes, k = group_size, group.by = 'cluster_plus')
+
+    return(p)
+}
+
+
+
+
+
+#' Seurat DotPlot
+#'
+#' @param obj object
+#' @param group
+#'
+#' @return plot
+#'
+#' @import ggplot2
+#'
+#' @export
+#'
+Seurat_DotPlotMarkers <- function(obj=NULL, assay_use='SCT', d_markers=NULL, n=5, group='')
+{
+    topX.markers <- data.frame(d_markers %>% dplyr::group_by(cluster) %>% dplyr::slice(1:n))
+
+    meta <- obj@meta.data
+
+    if (group != ''){
+        meta$cluster_plus <- paste0('C', meta$seurat_clusters, '.', meta[[group]])
+    } else {
+        meta$cluster_plus <- paste0('C', meta$seurat_clusters)
+    }
+
+    sorted_name <- unique(meta[,c('seurat_clusters', 'cluster_plus')])
+    sorted_name <- as.vector(sorted_name$cluster_plus[order(as.numeric(sorted_name$seurat_clusters))])
+
+    obj@meta.data <- meta
+
+    color.scheme <- rev(brewer.pal(9,"RdBu"))
+    p <- Seurat::DotPlot(obj, assay = assay_use, group.by = 'cluster_plus', features = unique(topX.markers$gene)) +
+            theme_bw(base_line_size=0.1) +
+            scale_size_area(max_size = 3) +
+            scale_color_gradientn(colors=color.scheme, limits = c(-2.5, 2.5)) +
+            theme(axis.text.x = element_text(angle = 90, vjust = 0.5, hjust=1)) +
+            labs(title='', x='', y='') +
+            scale_y_discrete(limits=sorted_name) +
+            theme(
+                text=element_text(size=7), 
+                axis.text=element_text(colour="black", size=7), 
+                axis.title.x=element_blank()) +
+            labs(y="") +
+            theme(
+                    legend.position="bottom", 
+                    legend.key.width = unit(4, 'mm'),
+                    legend.key.height = unit(2.5, 'mm'),
+                    legend.title = element_text(size=7),
+                    legend.text=element_text(size=7)
+            )
+
+    p
+
+}
+
+
 
 
 
@@ -207,11 +304,11 @@ Seurat_DimPlot <- function(obj=NULL,
 Seurat_DimPlot2 <- function(obj=NULL,
     reduction='umap', group_by='cell_type2',
     title='', x_lab='UMAP 1', y_lab='UMAP 2',
-    colors='', label=FALSE, legend=FALSE,
+    colors='', label=FALSE, legend=FALSE, repel=TRUE,
     xa=1.2, xb=.3, ya=1.1, yb=.25
 ){
 
-    p <- Seurat::DimPlot(obj, reduction=reduction, group.by=group_by, label.size=3, label=label, pt.size=0.01)
+    p <- Seurat::DimPlot(obj, reduction=reduction, group.by=group_by, label.size=3, label=label, pt.size=0.01, repel=repel)
     
     p <- p + patchwork::plot_layout(guides = "collect") +
             theme(plot.title = element_text(size = 10),
@@ -252,9 +349,29 @@ Seurat_DimPlot2 <- function(obj=NULL,
 
 
 
+#' scCustom DimPlot
+#'
+#' @param obj object
+#' @param reduction
+#'
+#' @return plot
+#'
+#' @import scCustomize 
+#'
+#' @export
+#'
+scCustom_DimPlot <- function(obj=NULL,
+    reduction='umap', group_by='cell_type2',
+    title='', x_lab='UMAP 1', y_lab='UMAP 2',
+    colors=NULL, label=FALSE, repel=TRUE, figure_plot=TRUE
+){
+    
+    p <- scCustomize::DimPlot_scCustom(seurat_object = obj, group.by=group_by, reduction = reduction, 
+                colors_use=colors, label=label, repel=repel, figure_plot = figure_plot)
+    p <- p + labs(title=title, x=x_lab, y=y_lab)
 
-
-
+    return(p)
+}
 
 
 
