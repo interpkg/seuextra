@@ -162,7 +162,7 @@ scCustom_FeaturePlot <- function(
 #' @export
 #'
 scCustomize_ClusteredDotPlot <- function(obj=NULL, group='', d_markers='', n=7){
-    group_size <- length(unique(obj[[group]]))
+    group_size <- length(unique(obj@meta.data[[group]]))
 
     top_markers <- scCustomize::Extract_Top_Markers(marker_dataframe = d_markers, num_genes = n, 
             group_by = group, rank_by = "avg_log2FC",
