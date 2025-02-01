@@ -207,21 +207,22 @@ Seurat_DimPlot <- function(obj=NULL,
 Seurat_DimPlot2 <- function(obj=NULL,
     reduction='umap', group_by='cell_type2',
     title='', x_lab='UMAP 1', y_lab='UMAP 2',
-    colors='', label=FALSE,
+    colors='', label=FALSE, legend=FALSE,
     xa=1.2, xb=.3, ya=1.1, yb=.25
 ){
 
     p <- Seurat::DimPlot(obj, reduction=reduction, group.by=group_by, label.size=3, label=label, pt.size=0.01)
     
-    p <- p + patchwork::plot_layout(guides = "collect") & 
+    p <- p + patchwork::plot_layout(guides = "collect") +
             theme(plot.title = element_text(size = 10),
-                text=element_text(size=8), 
-                axis.text=element_text(size=6)) &
-            theme(legend.position = 'none') &
-            theme(axis.text=element_blank(),
-                axis.ticks=element_blank()) &
+                text=element_text(size=8), axis.text=element_text(size=6)) +
+            theme(axis.text=element_blank(), axis.ticks=element_blank()) +
             labs(title=title, x = x_lab, y = y_lab) 
 
+    if (!legend){
+        p <- p + theme(legend.position = 'none')
+    }
+    
     if (length(colors) > 1){
         p <- p + scale_color_manual(values=colors)
     }

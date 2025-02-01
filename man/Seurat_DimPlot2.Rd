@@ -13,6 +13,7 @@ Seurat_DimPlot2(
   y_lab = "UMAP 2",
   colors = "",
   label = FALSE,
+  legend = FALSE,
   xa = 1.2,
   xb = 0.3,
   ya = 1.1,
