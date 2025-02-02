@@ -73,4 +73,37 @@ GenxFindAllMarkers <- function(obj, assay_use='SCT', idents='seurat_clusters', l
 
 
 
+#' Genx Conserved CellType Markers
+#'
+#' @param obj object
+#' @param assay_use assay
+#' @return data frame
+#' @export
+#'
+GenxConservedCellTypeMarkers <- function(obj, assay_use='SCT', idents='cell_type2')
+{ 
+    Idents(obj) <- idents
+    meta <- obj@meta.data
+    celltype_set <- unique(meta[[idents]])
+
+    d_markers <- NULL
+    i = 1
+    for (x in celltype_set){
+        temp_markers <- FindConservedMarkers(obj, ident.1 = x, grouping.var = "orig.ident", assay=assay_use, verbose = FALSE)
+        if (i == 1){
+            d_markers <- temp_markers
+            d_markers[[idents]] <- ct
+            i = 2
+        } else {
+            d_markers <- rbind(d_markers, temp_markers)
+        }
+    }
+    
+    return(d_markers)
+}
+
+
+
+
+
 
