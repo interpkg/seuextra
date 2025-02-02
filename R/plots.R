@@ -165,7 +165,7 @@ scCustomize_ClusteredDotPlot <- function(obj=NULL, group='', d_markers='', n=7){
     group_size <- length(unique(obj@meta.data[[group]]))
 
     top_markers <- scCustomize::Extract_Top_Markers(marker_dataframe = d_markers, num_genes = n, 
-            group_by = group, rank_by = "avg_log2FC",
+            group_by = "cluster", rank_by = "avg_log2FC",
             named_vector = FALSE, make_unique = TRUE)
     
     p <- scCustomize::Clustered_DotPlot(seurat_object = obj, features = top_markers, group.by = group, 
@@ -194,27 +194,14 @@ Seurat_DotPlotMarkers <- function(obj=NULL, assay_use='SCT', d_markers=NULL, n=5
 {
     topX.markers <- data.frame(d_markers %>% dplyr::group_by(cluster) %>% dplyr::slice(1:n))
 
-    meta <- obj@meta.data
-
-    if (group != ''){
-        meta$cluster_plus <- paste0('C', meta$seurat_clusters, '.', meta[[group]])
-    } else {
-        meta$cluster_plus <- paste0('C', meta$seurat_clusters)
-    }
-
-    sorted_name <- unique(meta[,c('seurat_clusters', 'cluster_plus')])
-    sorted_name <- as.vector(sorted_name$cluster_plus[order(as.numeric(sorted_name$seurat_clusters))])
-
-    obj@meta.data <- meta
-
     color.scheme <- rev(brewer.pal(9,"RdBu"))
-    p <- Seurat::DotPlot(obj, assay = assay_use, group.by = 'cluster_plus', features = unique(topX.markers$gene)) +
+    p <- Seurat::DotPlot(obj, assay = assay_use, group.by = group, features = unique(topX.markers$gene)) +
             theme_bw(base_line_size=0.1) +
             scale_size_area(max_size = 3) +
             scale_color_gradientn(colors=color.scheme, limits = c(-2.5, 2.5)) +
             theme(axis.text.x = element_text(angle = 90, vjust = 0.5, hjust=1)) +
             labs(title='', x='', y='') +
-            scale_y_discrete(limits=sorted_name) +
+            #scale_y_discrete(limits=sorted_name) +
             theme(
                 text=element_text(size=7), 
                 axis.text=element_text(colour="black", size=7), 

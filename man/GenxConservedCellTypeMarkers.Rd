@@ -4,7 +4,7 @@
 \alias{GenxConservedCellTypeMarkers}
 \title{Genx Conserved CellType Markers}
 \usage{
-GenxConservedCellTypeMarkers(obj, assay_use = "SCT", idents = "cell_type2")
+GenxConservedCellTypeMarkers(obj, assay_use = "SCT", group = "cell_type2")
 }
 \arguments{
 \item{obj}{object}
