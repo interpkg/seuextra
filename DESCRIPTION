@@ -12,6 +12,8 @@ Imports:
     Signac,
     scCustomize,
     ComplexHeatmap,
+    multtest,
+    metap,
     dplyr,
     tidyr,
     ggplot2,

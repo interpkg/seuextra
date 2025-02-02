@@ -92,7 +92,7 @@ GenxConservedCellTypeMarkers <- function(obj, assay_use='SCT', idents='cell_type
         temp_markers <- FindConservedMarkers(obj, ident.1 = x, grouping.var = "orig.ident", assay=assay_use, verbose = FALSE)
         if (i == 1){
             d_markers <- temp_markers
-            d_markers[[idents]] <- ct
+            d_markers[[idents]] <- x
             i = 2
         } else {
             d_markers <- rbind(d_markers, temp_markers)
