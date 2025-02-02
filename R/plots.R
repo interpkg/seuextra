@@ -194,6 +194,9 @@ Seurat_DotPlotMarkers <- function(obj=NULL, assay_use='SCT', d_markers=NULL, n=5
 {
     topX.markers <- data.frame(d_markers %>% dplyr::group_by(cluster) %>% dplyr::slice(1:n))
 
+    meta <- obj@meta.data
+    sorted_name <- as.vector(meta[[group]][order(as.numeric(meta$seurat_clusters))])
+
     color.scheme <- rev(brewer.pal(9,"RdBu"))
     p <- Seurat::DotPlot(obj, assay = assay_use, group.by = group, features = unique(topX.markers$gene)) +
             theme_bw(base_line_size=0.1) +
@@ -201,7 +204,7 @@ Seurat_DotPlotMarkers <- function(obj=NULL, assay_use='SCT', d_markers=NULL, n=5
             scale_color_gradientn(colors=color.scheme, limits = c(-2.5, 2.5)) +
             theme(axis.text.x = element_text(angle = 90, vjust = 0.5, hjust=1)) +
             labs(title='', x='', y='') +
-            #scale_y_discrete(limits=sorted_name) +
+            scale_y_discrete(limits=sorted_name) +
             theme(
                 text=element_text(size=7), 
                 axis.text=element_text(colour="black", size=7), 
