@@ -369,10 +369,7 @@ Signal_UMAPPlot <- function(df=NULL, label_name='Signal'){
 
     p <- ggplot(df, aes(x=UMAP_1, y=UMAP_2, color=signal)) + 
             geom_point(size=0.1) +
-            theme_classic(base_line_size=0.2) +
-            theme(panel.grid.major = element_blank(), panel.grid.minor = element_blank(),
-                axis.text.x = element_blank(), axis.text.y = element_blank(), axis.ticks = element_blank()) +
-            labs(x = "UMAP 1", y="UMAP 2") +
+            theme_void() +
             scale_color_manual(name = label_name, breaks = c("High", "Middle", "Low"), values=c("#CB4335", "#F5B7B1", "#D7DBDD")) +
             guides(color = guide_legend(override.aes = list(size = 2))) +
             theme(legend.title = element_text(size=8)) +
