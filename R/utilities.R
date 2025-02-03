@@ -36,6 +36,71 @@ ExportUMAP <- function(obj, umap)
 
 
 
+#' Seurat Add Score
+#'
+#' @param obj seurat object
+#' @param name score title 
+#' @param features gene vectors 
+#'
+#' @return seurat object
+#'
+#' @import Seurat
+#'
+#' @export
+#'
+SeuratAddScore <- function(obj=NULL, assay_use='SCT', name='', features=''){
+    all_gene <- rownames(obj[[assay_use]]@data)
+    gene_intersect <- intersect(features, all_gene)
+
+    obj <- AddModuleScore(
+        object = obj,
+        assay = assay_use,
+        slot = "data",
+        features = list(gene_intersect),
+        name = name
+    )
+
+    return(obj)
+}
+
+
+
+
+#' EstimatedSignal
+#'
+#' @param obj seurat object
+#' @param features genes
+#' @param umap umap
+#'
+#' @return data frame
+#'
+#' @export
+#'
+EstimatedSignal <- function(obj=NULL, assay_use='SCT', name='', features='', min_cutoff=0.1, max_cutoff=0.2, umap='umap')
+{
+    obj <- SeuratAddScore(obj=obj, assay_use=assay_use, name=name, features=features)
+
+    df <- obj@meta.data[,c('orig.ident', 'seurat_clusters', paste0(name, '1'))]
+    df$signal <- 'Middle'
+    df$signal[ df[[paste0(name, '1')]] > max_cutoff ] <- 'High'
+    df$signal[ df[[paste0(name, '1')]] < min_cutoff ] <- 'Low'
+
+    df$group <- 2
+    df$group[df$signal == 'High'] <- 1
+    df$group[df$signal == 'Low'] <- 3
+
+    # umap
+    df$UMAP_1 <- obj@reductions[[umap]]@cell.embeddings[,1]
+    df$UMAP_2 <- obj@reductions[[umap]]@cell.embeddings[,2]
+
+    return(df)
+}
+
+
+
+
+
+
 #' Gene expression markers for all group
 #'
 #' @param obj object

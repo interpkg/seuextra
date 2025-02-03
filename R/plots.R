@@ -354,5 +354,55 @@ scCustom_DimPlot <- function(obj=NULL,
 
 
 
+#%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+#  Singal Plot
+#%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+#' Signal UMAPPlot Group
+#'
+#' @param df dataframe
+#'
+#' @export
+#'
+Signal_UMAPPlot <- function(df=NULL, label_name='Signal'){
+    df <- df[order(df$group, decreasing=TRUE), ]
+
+    p <- ggplot(df, aes(x=UMAP_1, y=UMAP_2, color=signal)) + 
+            geom_point(size=0.1) +
+            theme_classic(base_line_size=0.2) +
+            theme(panel.grid.major = element_blank(), panel.grid.minor = element_blank(),
+                axis.text.x = element_blank(), axis.text.y = element_blank(), axis.ticks = element_blank()) +
+            labs(x = "UMAP 1", y="UMAP 2") +
+            scale_color_manual(name = label_name, breaks = c("High", "Middle", "Low"), values=c("#CB4335", "#F5B7B1", "#D7DBDD")) +
+            guides(color = guide_legend(override.aes = list(size = 2))) +
+            theme(legend.title = element_text(size=8)) +
+            theme(text=element_text(size=8))
+
+    p
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 

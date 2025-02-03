@@ -1,34 +1,6 @@
-
-
-
-
-#' Seurat Add Score
+#' @include utilities.R
 #'
-#' @param obj seurat object
-#' @param name score title 
-#' @param features gene vectors 
-#'
-#' @return seurat object
-#'
-#' @import Seurat
-#'
-#' @export
-#'
-SeuratAddScore <- function(obj=NULL, assay_use='SCT', name='', features=''){
-    all_gene <- rownames(obj[[assay_use]]@data)
-    gene_intersect <- intersect(features, all_gene)
-
-    obj <- AddModuleScore(
-        object = obj,
-        assay = assay_use,
-        slot = "data",
-        features = list(gene_intersect),
-        name = name
-    )
-
-    return(obj)
-}
-
+NULL
 
 
 

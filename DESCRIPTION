@@ -23,4 +23,9 @@ Imports:
     gprofiler2
 RoxygenNote: 7.3.2
 Encoding: UTF-8
-
+Collate: 
+    'utilities.R'
+    'cellcycle.R'
+    'db.R'
+    'motifs.R'
+    'plots.R'
