@@ -195,7 +195,7 @@ Seurat_DotPlotMarkers <- function(obj=NULL, assay_use='SCT', d_markers=NULL, n=5
     topX.markers <- data.frame(d_markers %>% dplyr::group_by(cluster) %>% dplyr::slice(1:n))
 
     meta <- obj@meta.data
-    sorted_name <- as.vector(meta[[group]][order(as.numeric(meta$seurat_clusters))])
+    sorted_name <- unique(topX.markers$cluster)
 
     color.scheme <- rev(brewer.pal(9,"RdBu"))
     p <- Seurat::DotPlot(obj, assay = assay_use, group.by = group, features = unique(topX.markers$gene)) +
