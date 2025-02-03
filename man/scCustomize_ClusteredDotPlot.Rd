@@ -4,7 +4,13 @@
 \alias{scCustomize_ClusteredDotPlot}
 \title{scCustomize ClusteredDotPlot}
 \usage{
-scCustomize_ClusteredDotPlot(obj = NULL, group = "", d_markers = "", n = 7)
+scCustomize_ClusteredDotPlot(
+  obj = NULL,
+  group = "",
+  d_markers = "",
+  top_n = 7,
+  k_size = 7
+)
 }
 \arguments{
 \item{obj}{object}

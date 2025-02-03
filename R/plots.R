@@ -161,16 +161,15 @@ scCustom_FeaturePlot <- function(
 #'
 #' @export
 #'
-scCustomize_ClusteredDotPlot <- function(obj=NULL, group='', d_markers='', n=7){
-    group_size <- length(unique(obj@meta.data[[group]]))
+scCustomize_ClusteredDotPlot <- function(obj=NULL, group='', d_markers='', top_n=7, k_size=7){
 
-    top_markers <- scCustomize::Extract_Top_Markers(marker_dataframe = d_markers, num_genes = n, 
+    top_markers <- scCustomize::Extract_Top_Markers(marker_dataframe = d_markers, num_genes = top_n, 
             group_by = "cluster", rank_by = "avg_log2FC",
             named_vector = FALSE, make_unique = TRUE)
     
     p <- scCustomize::Clustered_DotPlot(seurat_object = obj, features = top_markers, group.by = group, 
             row_label_size = 6, column_label_size = 8, legend_label_size = 6, legend_title_size = 8,
-            k = group_size, plot_km_elbow=FALSE)
+            k = k_size, plot_km_elbow=FALSE)
 
     return(p)
 }
