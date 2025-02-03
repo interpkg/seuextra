@@ -35,7 +35,7 @@ ExtractMotifSig <- function(obj, motifs='all')
 #'
 #' @param obj data
 #' @param motifs ids
-#' @param group name
+#' @param group add group name
 #' 
 #' @return data frame
 #' @export
@@ -188,6 +188,32 @@ CalCellRatioForMotifSig <- function(obj, motifs='all', group='', sample_group=''
     
     return(d_ratio)
 }
+
+
+
+
+#' Motif SetSignalGroup
+#'
+#' @param obj object
+#' @param motif id
+#' @param group name 
+#' @param min_cutoff min signal cutoff
+#' @param max_cutoff max signal cutoff
+#' @return data frame
+#' @export
+#'
+Motif_SetSignalGroup <- function(obj, motif=NULL, group='cell_type2', min_cutoff=0.5, max_cutoff=1)
+{ 
+    d_motif <- ExtractMotifSigTranspose(obj=obj, motifs=motif, group=group)
+    d_motif$signal <- 'Middle'
+    d_motif$signal[ d_motif[[motif]] > max_cutoff ] <- 'High'
+    d_motif$signal[ d_motif[[motif]] < min_cutoff ] <- 'Low'
+    d_motif$signal[ d_motif[[motif]] <= 0 ] <- 'No'
+
+    return(d_motif)
+}
+
+
 
 
 

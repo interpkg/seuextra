@@ -11,7 +11,7 @@ ExtractMotifSigTranspose(obj, motifs = "all", group = "")
 
 \item{motifs}{ids}
 
-\item{group}{name}
+\item{group}{add group name}
 }
 \value{
 data frame
