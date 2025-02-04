@@ -31,7 +31,7 @@ ExtractMotifSig <- function(obj, motifs='all')
 
 
 
-#' Extract motif signal
+#' Extract multiple motif set signal
 #'
 #' @param obj data
 #' @param motifs ids
@@ -46,9 +46,16 @@ ExtractMotifSigTranspose <- function(obj, motifs='all', group='')
 
     if (motifs == 'all'){
         d_motif <- data.frame(t(obj@assays$chromvar@data))
+
     } else {
         tar_motifs <- stringr::str_split(motifs, ',')[[1]]
-        d_motif <- data.frame(t(obj@assays$chromvar@data[tar_motifs,]))
+
+        if (length(tar_motifs) == 1){
+            d_motif <- as.data.frame(seu@assays$chromvar@data[tar_motifs,])
+            colnames(d_motif) <- tar_motifs
+        } else {
+            d_motif <- data.frame(t(obj@assays$chromvar@data[tar_motifs,]))
+        }
     }
 
     metadata <- obj@meta.data

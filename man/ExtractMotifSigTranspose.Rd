@@ -2,7 +2,7 @@
 % Please edit documentation in R/motifs.R
 \name{ExtractMotifSigTranspose}
 \alias{ExtractMotifSigTranspose}
-\title{Extract motif signal}
+\title{Extract multiple motif set signal}
 \usage{
 ExtractMotifSigTranspose(obj, motifs = "all", group = "")
 }
@@ -17,5 +17,5 @@ ExtractMotifSigTranspose(obj, motifs = "all", group = "")
 data frame
 }
 \description{
-Extract motif signal
+Extract multiple motif set signal
 }
