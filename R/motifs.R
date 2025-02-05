@@ -93,7 +93,7 @@ CalMeanByGroup <- function(df, group='', with_sample=FALSE)
 
     # call means
     if (with_sample){
-        df <- df %>% group_by('orig.ident', .data[[group]]) %>% summarise(across(all_of(col_name), mean))
+        df <- df %>% group_by(orig.ident, .data[[group]]) %>% summarise(across(all_of(col_name), mean))
     } else {
         df <- df %>% group_by(.data[[group]]) %>% summarise(across(all_of(col_name), mean))
     }
@@ -123,7 +123,7 @@ CalMedianByGroup <- function(df, group='', with_sample=FALSE)
 
     # call median
     if (with_sample){
-        df <- df %>% group_by('orig.ident', .data[[group]]) %>% summarise(across(all_of(col_name), median))
+        df <- df %>% group_by(orig.ident, .data[[group]]) %>% summarise(across(all_of(col_name), median))
     } else {
         df <- df %>% group_by(.data[[group]]) %>% summarise(across(all_of(col_name), median))
     }
