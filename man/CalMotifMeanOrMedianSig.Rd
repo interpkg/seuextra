@@ -4,7 +4,13 @@
 \alias{CalMotifMeanOrMedianSig}
 \title{Calculate mean motif signal}
 \usage{
-CalMotifMeanOrMedianSig(obj, motifs = "all", group = "", method = "mean")
+CalMotifMeanOrMedianSig(
+  obj,
+  motifs = "all",
+  group = "",
+  method = "mean",
+  with_sample = FALSE
+)
 }
 \arguments{
 \item{obj}{anno}

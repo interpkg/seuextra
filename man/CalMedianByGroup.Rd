@@ -4,7 +4,7 @@
 \alias{CalMedianByGroup}
 \title{Call median}
 \usage{
-CalMedianByGroup(df, group = "")
+CalMedianByGroup(df, group = "", with_sample = FALSE)
 }
 \arguments{
 \item{df}{data}

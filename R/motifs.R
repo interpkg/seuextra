@@ -85,16 +85,19 @@ ExtractMotifSigTranspose <- function(obj, motifs='all', group='')
 #' @import dplyr
 #' @export
 #'
-CalMeanByGroup <- function(df, group='')
+CalMeanByGroup <- function(df, group='', with_sample=FALSE)
 { 
     # remove group name
     col_name <- colnames(df)
     col_name <- col_name[ !col_name %in% c('orig.ident', group)]
 
     # call means
-    df <- df %>% 
-            group_by(.data[[group]]) %>%
-            summarise(across(all_of(col_name), mean))
+    if (with_sample){
+        df <- df %>% group_by('orig.ident', .data[[group]]) %>% summarise(across(all_of(col_name), mean))
+    } else {
+        df <- df %>% group_by(.data[[group]]) %>% summarise(across(all_of(col_name), mean))
+    }
+    
 
     df <- as.data.frame(df)
 
@@ -112,16 +115,18 @@ CalMeanByGroup <- function(df, group='')
 #' @import dplyr
 #' @export
 #'
-CalMedianByGroup <- function(df, group='')
+CalMedianByGroup <- function(df, group='', with_sample=FALSE)
 { 
     # remove group name
     col_name <- colnames(df)
     col_name <- col_name[ !col_name %in% c('orig.ident', group)]
 
-    # call means
-    df <- df %>% 
-            group_by(.data[[group]]) %>%
-            summarise(across(all_of(col_name), median))
+    # call median
+    if (with_sample){
+        df <- df %>% group_by('orig.ident', .data[[group]]) %>% summarise(across(all_of(col_name), median))
+    } else {
+        df <- df %>% group_by(.data[[group]]) %>% summarise(across(all_of(col_name), median))
+    }
 
     df <- as.data.frame(df)
 
@@ -140,7 +145,7 @@ CalMedianByGroup <- function(df, group='')
 #' @return data frame
 #' @export
 #'
-CalMotifMeanOrMedianSig <- function(obj, motifs='all', group='', method='mean')
+CalMotifMeanOrMedianSig <- function(obj, motifs='all', group='', method='mean', with_sample=FALSE)
 {   
     d_motif <- ExtractMotifSigTranspose(obj, motifs, group)
 
@@ -148,10 +153,10 @@ CalMotifMeanOrMedianSig <- function(obj, motifs='all', group='', method='mean')
     d_score <- NULL
     # mean
     if (method == 'mean'){
-        d_score <- CalMeanByGroup(d_motif, group)
+        d_score <- CalMeanByGroup(d_motif, group, with_sample)
     }
     if (method == 'median'){
-        d_score <- CalMedianByGroup(d_motif, group)
+        d_score <- CalMedianByGroup(d_motif, group, with_sample)
     }
     
     

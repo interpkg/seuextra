@@ -4,7 +4,7 @@
 \alias{CalMeanByGroup}
 \title{Call mean}
 \usage{
-CalMeanByGroup(df, group = "")
+CalMeanByGroup(df, group = "", with_sample = FALSE)
 }
 \arguments{
 \item{df}{data}
