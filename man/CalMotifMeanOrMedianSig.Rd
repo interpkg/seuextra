@@ -9,7 +9,8 @@ CalMotifMeanOrMedianSig(
   motifs = "all",
   group = "",
   method = "mean",
-  with_sample = FALSE
+  with_sample = FALSE,
+  add_cellcount = FALSE
 )
 }
 \arguments{

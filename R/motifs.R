@@ -136,7 +136,6 @@ CalMedianByGroup <- function(df, group='', with_sample=FALSE)
 
 
 
-
 #' Calculate mean motif signal
 #'
 #' @param obj anno
@@ -145,9 +144,10 @@ CalMedianByGroup <- function(df, group='', with_sample=FALSE)
 #' @return data frame
 #' @export
 #'
-CalMotifMeanOrMedianSig <- function(obj, motifs='all', group='', method='mean', with_sample=FALSE)
+CalMotifMeanOrMedianSig <- function(obj, motifs='all', group='', method='mean', with_sample=FALSE, add_cellcount=FALSE)
 {   
     d_motif <- ExtractMotifSigTranspose(obj, motifs, group)
+    # <motif> ... orig.ident  <group>
 
     # calculare
     d_score <- NULL
@@ -159,10 +159,14 @@ CalMotifMeanOrMedianSig <- function(obj, motifs='all', group='', method='mean', 
         d_score <- CalMedianByGroup(d_motif, group, with_sample)
     }
     
+    if (add_cellcount){
+        dcount <- as.data.frame(table(d_motif[,c('orig.ident', group)]))
+        colnames(dcount) <- c('orig.ident', group, 'cell_count')
+        d_score <- merge(d_score, dcount, by=c('orig.ident', group))
+    }
     
     return(d_score)
 }
-
 
 
 
