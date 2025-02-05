@@ -99,8 +99,6 @@ EstimatedSignal <- function(obj=NULL, assay_use='SCT', name='', features='', min
 
 
 
-
-
 #' Gene expression markers for all group
 #'
 #' @param obj object
