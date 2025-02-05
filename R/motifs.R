@@ -99,6 +99,34 @@ CalMeanByGroup <- function(df, group='')
 
 
 
+#' Call median
+#'
+#' @param df data
+#' @param group name
+#' @return data frame
+#' @import dplyr
+#' @export
+#'
+CalMedianByGroup <- function(df, group='')
+{ 
+    # remove group name
+    col_name <- colnames(df)
+    col_name <- col_name[ !col_name %in% c('orig.ident', group)]
+
+    # call means
+    df <- df %>% 
+            group_by(.data[[group]]) %>%
+            summarise(across(all_of(col_name), median))
+
+    df <- as.data.frame(df)
+
+    return(df)
+}
+
+
+
+
+
 #' Calculate mean motif signal
 #'
 #' @param obj anno
@@ -107,12 +135,20 @@ CalMeanByGroup <- function(df, group='')
 #' @return data frame
 #' @export
 #'
-CalMotifMeanSig <- function(obj, motifs='all', group='')
+CalMotifMeanOrMedianSig <- function(obj, motifs='all', group='', method='mean')
 {   
     d_motif <- ExtractMotifSigTranspose(obj, motifs, group)
 
     # calculare
-    d_avg_score <- CalMeanByGroup(d_motif, group)
+    d_score <- NULL
+    # mean
+    if (method == 'mean'){
+        d_score <- CalMeanByGroup(d_motif, group)
+    }
+    if (method == 'median'){
+        d_score <- CalMedianByGroup(d_motif, group)
+    }
+    
     
     return(d_avg_score)
 }
