@@ -60,10 +60,15 @@ ExtractMotifSigTranspose <- function(obj, motifs='all', group='')
 
     metadata <- obj@meta.data
     d_motif$orig.ident <- metadata$orig.ident[match(rownames(metadata), rownames(d_motif))]
-    d_motif[group] <- metadata[[group]][match(rownames(metadata), rownames(d_motif))]
+    #                               MA1615.1    MA1548.1    MA0163.1   orig.ident
+    # H_02_2138_AAACAGCCAAGTGAAC.1  0.9646257  0.03137187  0.23462118   x        
 
-    #                               MA1615.1    MA1548.1    MA0163.1   orig.ident  <group>
-    # H_02_2138_AAACAGCCAAGTGAAC.1  0.9646257  0.03137187  0.23462118   x             x
+    if (group != ''){
+        d_motif[group] <- metadata[[group]][match(rownames(metadata), rownames(d_motif))]
+        #                               MA1615.1    MA1548.1    MA0163.1   orig.ident  <group>
+        # H_02_2138_AAACAGCCAAGTGAAC.1  0.9646257  0.03137187  0.23462118   x             x
+    }
+    
 
     return(d_motif)
 }
