@@ -150,7 +150,7 @@ CalMotifMeanOrMedianSig <- function(obj, motifs='all', group='', method='mean')
     }
     
     
-    return(d_avg_score)
+    return(d_score)
 }
 
 
