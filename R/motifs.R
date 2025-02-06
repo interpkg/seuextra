@@ -160,9 +160,17 @@ CalMotifMeanOrMedianSig <- function(obj, motifs='all', group='', method='mean', 
     }
     
     if (add_cellcount){
-        dcount <- as.data.frame(table(d_motif[,c('orig.ident', group)]))
-        colnames(dcount) <- c('orig.ident', group, 'cell_count')
-        d_score <- merge(d_score, dcount, by=c('orig.ident', group))
+        if (with_sample){
+            dcount <- as.data.frame(table(d_motif[,group]))
+            colnames(dcount) <- c(group, 'cell_count')
+            d_score <- merge(d_score, dcount, by=group)
+            # <motif> ...  <group>  cell_count
+        } else {
+            dcount <- as.data.frame(table(d_motif[,c('orig.ident', group)]))
+            colnames(dcount) <- c('orig.ident', group, 'cell_count')
+            d_score <- merge(d_score, dcount, by=c('orig.ident', group))
+            # <motif> ... orig.ident  <group>  cell_count
+        }
     }
     
     return(d_score)
