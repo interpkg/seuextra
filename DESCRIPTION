@@ -28,4 +28,5 @@ Collate:
     'cellcycle.R'
     'db.R'
     'motifs.R'
+    'peaks.R'
     'plots.R'
