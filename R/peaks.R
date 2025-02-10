@@ -76,22 +76,20 @@ BedtoolsIntersectQuery <- function(query=NULL, db=NULL, cutoff=0.5){
 
 
 
-
-#' CalIntersectOpenPeaksPerCell
+#' CalIntersectMotifOpenPeaksPerCell
 #'
 #' @param obj multiome object
 #' @param fquery bed file
 #' @param fdb bed file
-#' @param cutoff cutoff overlap
+#' @param cutoff overlap cutoff
+#' @param count_cutoff count cutoff
 #' @param temp_dir temporary dir
 #' 
 #' @return data frame
 #' @export
 #'
-CalIntersectOpenPeaksPerCell <- function(obj=NULL, assay='peaks', motif='', fdb='', cutoff=0.5, temp_dir='temp'){
+CalIntersectMotifOpenPeaksPerCell <- function(obj=NULL, motif='', fdb='', cutoff=0.5, count_cutoff=2, temp_dir='temp'){
       dir.create(temp_dir)
-
-      DefaultAssay(obj) <- assay
 
       # motif related peaks
       # get motif
@@ -112,13 +110,53 @@ CalIntersectOpenPeaksPerCell <- function(obj=NULL, assay='peaks', motif='', fdb=
       # region cell1 cell2 ...
 
       # count cutoff 3
-      d_open_peak_in_cell <- data.frame(apply(mtx_peak_count, 2, function(col) sum(col > 2)))
+      d_open_peak_in_cell <- data.frame(apply(mtx_peak_count, 2, function(col) sum(col > count_cutoff)))
       colnames(d_open_peak_in_cell) <- 'open_peaks'
       # <cell>  open_peaks
 
       return(d_open_peak_in_cell)
 }
 
+
+
+
+
+#' CalIntersectOpenPeaksPerCell
+#'
+#' @param obj multiome object
+#' @param fquery bed file
+#' @param fdb bed file
+#' @param cutoff overlap cutoff
+#' @param count_cutoff count cutoff
+#' @param temp_dir temporary dir
+#' 
+#' @return data frame
+#' @export
+#'
+CalIntersectOpenPeaksPerCell <- function(obj=NULL, fdb='', cutoff=0.5, count_cutoff=2, temp_dir='temp'){
+      dir.create(temp_dir)
+
+      all_peaks <- rownames(seu@assays$peaks)
+
+      # intesect peaks
+      peaks_bed <- ConvertPeakToBed(all_peaks)
+      write.table(peaks_bed, file=paste0(temp_dir, '/temp.all_peaks.bed'), sep='\t', quote=F, row.names=F, col.names=F)
+      fquery <- paste0(temp_dir, '/temp.all_peaks.bed')
+      
+      # query overlap peaks (low cutoff 0.3)
+      overlap_peaks <- BedtoolsIntersectQuery(query=fquery, db=fdb, cutoff=cutoff)
+
+      # peak count
+      mtx_peak_count <- as.matrix(obj@assays$peaks@counts[overlap_peaks,])
+      # region cell1 cell2 ...
+
+      # count cutoff 3
+      d_open_peak_in_cell <- data.frame(apply(mtx_peak_count, 2, function(col) sum(col > count_cutoff)))
+      colnames(d_open_peak_in_cell) <- 'open_peaks'
+      # <cell>  open_peaks
+
+      return(d_open_peak_in_cell)
+}
 
 
 
