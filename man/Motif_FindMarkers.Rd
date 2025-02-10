@@ -4,16 +4,12 @@
 \alias{Motif_FindMarkers}
 \title{Motif find markers}
 \usage{
-Motif_FindMarkers(obj, query = "", avg_fc = 0.585, pct_1 = 0.2, diff_pct = 0.1)
+Motif_FindMarkers(obj, query = "")
 }
 \arguments{
 \item{obj}{object}
 
 \item{query}{name}
-
-\item{avg_fc}{cutoff avg_diff}
-
-\item{pct_1}{cutoff pct.1}
 }
 \value{
 data frame

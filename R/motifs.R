@@ -287,12 +287,10 @@ Motif_SetSignalGroup <- function(obj, motif=NULL, group='cell_type2', min_cutoff
 #'
 #' @param obj object
 #' @param query name
-#' @param avg_fc cutoff avg_diff
-#' @param pct_1 cutoff pct.1
 #' @return data frame
 #' @export
 #'
-Motif_FindMarkers <- function(obj, query='', avg_fc=.585, pct_1=0.2, diff_pct=0.1)
+Motif_FindMarkers <- function(obj, query='')
 { 
     DefaultAssay(obj) <- 'chromvar'
 
@@ -309,9 +307,10 @@ Motif_FindMarkers <- function(obj, query='', avg_fc=.585, pct_1=0.2, diff_pct=0.
     )
 
     d_markers$diff_pct <- d_markers$pct.1 - d_markers$pct.2
-    d_filtered <- dplyr::filter(d_markers, avg_diff > avg_fc & p_val_adj<0.005 & pct.1 > pct_1 & diff_pct > diff_pct)
+    # avg_fc=.585, pct_1=0.2, diff_pct=0.1
+    #d_filtered <- dplyr::filter(d_markers, avg_diff > avg_fc & p_val_adj<0.005 & pct.1 > pct_1 & diff_pct > diff_pct)
 
-    return(d_filtered)
+    return(d_markers)
 }
 
 
@@ -320,12 +319,10 @@ Motif_FindMarkers <- function(obj, query='', avg_fc=.585, pct_1=0.2, diff_pct=0.
 #' Motif find all markers
 #'
 #' @param obj object
-#' @param avg_fc cutoff avg_diff
-#' @param pct_1 cutoff pct.1
 #' @return data frame
 #' @export
 #'
-Motif_FindAllMarkers <- function(obj, avg_fc=.585, pct_1=0.2, diff_pct=0.1)
+Motif_FindAllMarkers <- function(obj)
 { 
     DefaultAssay(obj) <- 'chromvar'
 
@@ -337,9 +334,10 @@ Motif_FindAllMarkers <- function(obj, avg_fc=.585, pct_1=0.2, diff_pct=0.1)
     )
 
     d_markers$diff_pct <- d_markers$pct.1 - d_markers$pct.2
-    d_filtered <- dplyr::filter(d_markers, avg_diff > avg_fc & p_val_adj<0.005 & pct.1 > pct_1 & diff_pct > diff_pct)
+    # avg_fc=.585, pct_1=0.2, diff_pct=0.1
+    #d_filtered <- dplyr::filter(d_markers, avg_diff > avg_fc & p_val_adj<0.005 & pct.1 > pct_1 & diff_pct > diff_pct)
 
-    return(d_filtered)
+    return(d_markers)
 }
 
 
