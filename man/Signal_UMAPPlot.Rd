@@ -4,7 +4,12 @@
 \alias{Signal_UMAPPlot}
 \title{Signal UMAPPlot Group}
 \usage{
-Signal_UMAPPlot(df = NULL, label_name = "Signal", colorset = 1)
+Signal_UMAPPlot(
+  df = NULL,
+  label_name = "Signal",
+  breaks = c("High", "Middle", "Low"),
+  colors = c("#CB4335", "#F5B7B1", "#D7DBDD")
+)
 }
 \arguments{
 \item{df}{dataframe}

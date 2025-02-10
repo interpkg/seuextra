@@ -246,8 +246,8 @@ Seurat_DimPlot <- function(obj=NULL,
 ){
     p <- Seurat::DimPlot(obj, reduction=reduction, group.by=group_by, label.size = 3, label=label, pt.size=0.01, repel=repel) 
 
-    if (length(color_set) > 1){
-        p <- p + scale_color_manual(values=color_set)
+    if (length(colors) > 1){
+        p <- p + scale_color_manual(values=colors)
     }
     
     # theme_void() + 
@@ -365,18 +365,16 @@ scCustom_DimPlot <- function(obj=NULL,
 #'
 #' @export
 #'
-Signal_UMAPPlot <- function(df=NULL, label_name='Signal', colorset=1){
+Signal_UMAPPlot <- function(df=NULL, 
+    label_name='Signal', breaks=c("High", "Middle", "Low"),
+    colors=c("#CB4335", "#F5B7B1", "#D7DBDD")
+){
     df <- df[order(df$group, decreasing=TRUE), ]
 
-    colors <- c("#CB4335", "#F5B7B1", "#D7DBDD")
-    if (colorset == 2){
-        colors <- c("#CB4335", "#2E86C1", "#D7DBDD")
-    }
-
-    p <- ggplot(df, aes(x=UMAP_1, y=UMAP_2, color=signal)) + 
+    p <- ggplot(df, aes(x=UMAP_1, y=UMAP_2, color=.data[[label_name]])) + 
             geom_point(size=0.01) +
             theme_void() +
-            scale_color_manual(name = label_name, breaks = c("High", "Middle", "Low"), values=colors) +
+            scale_color_manual(name = label_name, breaks = , values=colors) +
             guides(color = guide_legend(override.aes = list(size = 2))) +
             theme(legend.title = element_text(size=8)) +
             theme(text=element_text(size=8))

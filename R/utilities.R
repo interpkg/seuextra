@@ -36,6 +36,32 @@ ExportUMAP <- function(obj, umap)
 
 
 
+#' Add UMAP
+#'
+#' @param obj seurat object
+#' @param umap str
+#'
+#' @return data frame
+#'
+#' @export
+#'
+AddUMAP <- function(obj=NULL, df=NULL, umap=NULL)
+{
+    obj$UMAP_1 <- obj@reductions[[umap]]@cell.embeddings[,1]
+    obj$UMAP_2 <- obj@reductions[[umap]]@cell.embeddings[,2]
+    d_umap <- as.data.frame(obj@meta.data[,c('UMAP_1', 'UMAP_2')])
+
+    d_merged <- merge(df, d_umap, by='row.names', all=T)
+
+    return(d_merged)
+}
+
+
+
+
+
+
+
 #' Seurat Add Score
 #'
 #' @param obj seurat object
