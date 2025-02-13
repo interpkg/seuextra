@@ -336,8 +336,8 @@ Motif_FindMarkersMean_v2 <- function(obj, query='')
     FindMarkersMean <- function(obj=NULL, que=NULL, bkg=NULL) {
         diff_act <- Seurat::FindMarkers(
                       object = obj,
-                      ident.1 = q1,
-                      ident.2 = q2,
+                      ident.1 = que,
+                      ident.2 = bkg,
                       only.pos = TRUE,
                       logfc.threshold = 0.5,
                       mean.fxn = rowMeans,
