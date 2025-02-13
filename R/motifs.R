@@ -283,14 +283,14 @@ Motif_SetSignalGroup <- function(obj, motif=NULL, group='cell_type2', min_cutoff
 
 
 
-#' Motif find markers
+#' Motif find markers Mean
 #'
 #' @param obj object
 #' @param query name
 #' @return data frame
 #' @export
 #'
-Motif_FindMarkers <- function(obj, query='')
+Motif_FindMarkersMean <- function(obj, query='')
 { 
     DefaultAssay(obj) <- 'chromvar'
 
@@ -316,13 +316,71 @@ Motif_FindMarkers <- function(obj, query='')
 
 
 
-#' Motif find all markers
+
+#' Motif find markers Mean
+#'
+#' @param obj object
+#' @param query name
+#' @return data frame
+#' @export
+#'
+Motif_FindMarkersMean_v2 <- function(obj, query='')
+{ 
+    DefaultAssay(obj) <- 'chromvar'
+
+    all_items <- levels(obj)
+    bkg <- all_items[!all_items %in% query]
+    n_bkg <- length(bkg)
+
+    d_markers <- NULL
+    FindMarkersMean <- function(obj=NULL, que=NULL, bkg=NULL) {
+        diff_act <- Seurat::FindMarkers(
+                      object = obj,
+                      ident.1 = q1,
+                      ident.2 = q2,
+                      only.pos = TRUE,
+                      logfc.threshold = 0.5,
+                      mean.fxn = rowMeans,
+                      fc.name = "avg_diff"
+                    )
+
+        return(diff_act)
+    }
+
+    i <- 1
+    for (ct in bkg){
+        diff_markers <- FindMarkersMean(obj=obj, que=query, bkg=ct)
+        diff_markers$bkg <- ct
+        
+        if (i == 1){
+            d_markers <- diff_markers
+            i = 2
+        } else {
+            d_markers <- rbind(d_markers, diff_markers)
+        }
+    }
+
+    d_temp <- data.frame(table(d_markers$gene))
+    colnames(d_temp) <- c('motif', 'freq')
+    recurrent_motif <- as.vector(d_temp$motif[d_temp$freq == n_bkg])
+
+    # recurrent motif markers
+    d_markers <- d_markers[d_markers$gene %in% recurrent_motif, ]
+    d_markers$diff_pct <- d_markers$pct.1 - d_markers$pct.2
+    
+    return(d_markers)
+}
+
+
+
+
+#' Motif find all markers Mean
 #'
 #' @param obj object
 #' @return data frame
 #' @export
 #'
-Motif_FindAllMarkers <- function(obj)
+Motif_FindAllMarkersMean <- function(obj)
 { 
     DefaultAssay(obj) <- 'chromvar'
 
@@ -339,6 +397,9 @@ Motif_FindAllMarkers <- function(obj)
 
     return(d_markers)
 }
+
+
+
 
 
 

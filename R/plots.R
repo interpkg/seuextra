@@ -15,8 +15,8 @@ CustThemeOption1 <- function()
             axis.line = element_line(colour = 'black', size = 0.3),
             axis.ticks = element_line(linewidth = 0.3),
             axis.ticks.length=unit(1, "mm"),
-            legend.title = element_text(size=6),
-            legend.text = element_text(size=5),
+            legend.title = element_text(size=7),
+            legend.text = element_text(size=6),
             legend.key.width = unit(3, 'mm'),
             legend.key.height = unit(3, 'mm')
         )
@@ -352,35 +352,6 @@ scCustom_DimPlot <- function(obj=NULL,
 }
 
 
-
-
-
-#%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-#  Singal Plot
-#%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-
-#' Signal UMAPPlot Group
-#'
-#' @param df dataframe
-#'
-#' @export
-#'
-Signal_UMAPPlot <- function(df=NULL, 
-    label_name='Signal', breaks=c("High", "Middle", "Low"),
-    colors=c("#CB4335", "#F5B7B1", "#D7DBDD")
-){
-    df <- df[order(df$group, decreasing=TRUE), ]
-
-    p <- ggplot(df, aes(x=UMAP_1, y=UMAP_2, color=.data[[label_name]])) + 
-            geom_point(size=0.01) +
-            theme_void() +
-            scale_color_manual(name = label_name, breaks = , values=colors) +
-            guides(color = guide_legend(override.aes = list(size = 2))) +
-            theme(legend.title = element_text(size=8)) +
-            theme(text=element_text(size=8))
-
-    p
-}
 
 
 
