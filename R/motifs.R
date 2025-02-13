@@ -339,7 +339,7 @@ Motif_FindMarkersMean_v2 <- function(obj, query='')
                       ident.1 = que,
                       ident.2 = bkg,
                       only.pos = TRUE,
-                      logfc.threshold = 0.5,
+                      logfc.threshold = 0.25,
                       mean.fxn = rowMeans,
                       fc.name = "avg_diff"
                     )
@@ -350,7 +350,8 @@ Motif_FindMarkersMean_v2 <- function(obj, query='')
     i <- 1
     for (ct in bkg){
         diff_markers <- FindMarkersMean(obj=obj, que=query, bkg=ct)
-        diff_markers$bkg <- ct
+        diff_markers$motif <- rownames(diff_markers)
+        diff_markers$comp_group <- ct
         
         if (i == 1){
             d_markers <- diff_markers
@@ -360,12 +361,13 @@ Motif_FindMarkersMean_v2 <- function(obj, query='')
         }
     }
 
-    d_temp <- data.frame(table(d_markers$gene))
+    print(dim(d_markers))
+    d_temp <- data.frame(table(d_markers$motif))
     colnames(d_temp) <- c('motif', 'freq')
     recurrent_motif <- as.vector(d_temp$motif[d_temp$freq == n_bkg])
 
     # recurrent motif markers
-    d_markers <- d_markers[d_markers$gene %in% recurrent_motif, ]
+    d_markers <- d_markers[d_markers$motif %in% recurrent_motif, ]
     d_markers$diff_pct <- d_markers$pct.1 - d_markers$pct.2
     
     return(d_markers)
