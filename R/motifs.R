@@ -9,15 +9,14 @@
 #' @return data frame
 #' @export
 #'
-ExtractMotifSig <- function(obj, motifs='all')
+ExtractMotifSig <- function(obj, motifs=NULL)
 {
     d_motif <- NULL
 
-    if (motifs == 'all'){
-        d_motif <- data.frame(obj@assays$chromvar@data)
+    if (length(motifs) > 0){
+        d_motif <- data.frame(obj@assays$chromvar@data[motifs,])
     } else {
-        tar_motifs <- stringr::str_split(motifs, ',')[[1]]
-        d_motif <- data.frame(obj@assays$chromvar@data[tar_motifs,])
+        d_motif <- data.frame(obj@assays$chromvar@data)
     }
 
     #           H_02_2138_AAACAGCCAAGTGAAC.1   H_02_2138_AAACAGCCAAGTGATT.1 
@@ -40,22 +39,19 @@ ExtractMotifSig <- function(obj, motifs='all')
 #' @return data frame
 #' @export
 #'
-ExtractMotifSigTranspose <- function(obj, motifs='all', group='')
+ExtractMotifSigTranspose <- function(obj, motifs=NULL, group='')
 {
     d_motif <- NULL
 
-    if (motifs == 'all'){
-        d_motif <- data.frame(t(obj@assays$chromvar@data))
-
-    } else {
-        tar_motifs <- stringr::str_split(motifs, ',')[[1]]
-
-        if (length(tar_motifs) == 1){
-            d_motif <- as.data.frame(obj@assays$chromvar@data[tar_motifs,])
-            colnames(d_motif) <- tar_motifs
+    if (length(motifs) > 0){
+        if (length(motifs) == 1){
+            d_motif <- as.data.frame(obj@assays$chromvar@data[motifs,])
+            colnames(d_motif) <- motifs
         } else {
-            d_motif <- data.frame(t(obj@assays$chromvar@data[tar_motifs,]))
+            d_motif <- data.frame(t(obj@assays$chromvar@data[motifs,]))
         }
+    } else {
+        d_motif <- data.frame(t(obj@assays$chromvar@data))
     }
    
 
@@ -145,7 +141,7 @@ CalMedianByGroup <- function(df, group='', with_sample=FALSE)
 #' @return data frame
 #' @export
 #'
-CalMotifMeanOrMedianSig <- function(obj, motifs='all', group='', method='mean', with_sample=FALSE, add_cellcount=FALSE)
+CalMotifMeanOrMedianSig <- function(obj, motifs=NULL, group='', method='mean', with_sample=FALSE, add_cellcount=FALSE)
 {   
     d_motif <- ExtractMotifSigTranspose(obj, motifs, group)
     # <motif> ... orig.ident  <group>
@@ -218,13 +214,9 @@ CalSignalCountByGroup <- function(df, columns, group='', subgroup='', cutoff=0)
 #' @return data frame
 #' @export
 #'
-CalCellRatioForMotifSig <- function(obj, motifs='all', group='', sample_group='', cutoff=0)
+CalCellRatioForMotifSig <- function(obj, motifs=NULL, group='', sample_group='', cutoff=0)
 {   
     d_motif <- ExtractMotifSigTranspose(obj, motifs, group)
-
-    if (motifs != 'all'){
-        motifs <- stringr::str_split(motifs, ',')[[1]]
-    }
 
     # calculare count
     d_count <- CalSignalCountByGroup(df=d_motif, columns=motifs, group=group, subgroup=sample_group, cutoff=cutoff)
