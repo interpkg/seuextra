@@ -10,13 +10,13 @@
 CustThemeOption1 <- function()
 { 
     p <- theme(plot.title = element_text(size = 8),
-            text=element_text(size=6), 
-            axis.text=element_text(size=5),
+            text=element_text(size=6, face="bold"), 
+            axis.text=element_text(size=5, face="bold"),
             axis.line = element_line(colour = 'black', size = 0.3),
             axis.ticks = element_line(linewidth = 0.3),
             axis.ticks.length=unit(1, "mm"),
-            legend.title = element_text(size=7),
-            legend.text = element_text(size=6),
+            legend.title = element_text(size=7, face="bold"),
+            legend.text = element_text(size=6, face="bold"),
             legend.key.width = unit(3, 'mm'),
             legend.key.height = unit(3, 'mm')
         )
@@ -68,21 +68,22 @@ Seurat_FeaturePlot <- function(
     slot="data", 
     reduction='umap', 
     features=NULL, 
-    colors='#E0E0E0,red',
+    colors=c('#E0E0E0', 'red'),
     title = '',
     xlab='UMAP 1', 
     ylab='UMAP 2',
+    order=TRUE,
     min_cutoff = NA,
     max_cutoff = NA
 ){
-    features <- stringr::str_split(features, ',')[[1]]
-    colors <- stringr::str_split(colors, ',')[[1]]
+    #features <- stringr::str_split(features, ',')[[1]]
+    #colors <- stringr::str_split(colors, ',')[[1]]
 
     p <- Seurat::FeaturePlot(object = obj, slot=slot, features = features, 
-            reduction = reduction, order=T, pt.size=0.01, cols=colors,
+            reduction = reduction, order=order, pt.size=0.01, cols=colors,
             min.cutoff=min_cutoff, max.cutoff=max_cutoff)
 
-    p <- p & CustThemeOption1() & labs(title=title, x =xlab, y = ylab)
+    p <- p & CustThemeOption1() & labs(x =xlab, y = ylab)
      
     return(p)
 }
@@ -110,35 +111,15 @@ scCustom_FeaturePlot <- function(
     gene=NULL, features=NULL, 
     reduction='wnn.umap', 
     title='',
-    x_label='UMAP 1', y_label='UMAP 2',
+    xlab='UMAP 1', ylab='UMAP 2',
+    order=TRUE,
     colors=viridis_plasma_dark_high
 ){
-
-    x_label <- 'UMAP 1'
-    y_label <- 'UMAP 2'
-
-    if (reduction=='wnn.umap'){
-        x_label <- 'UMAP 1 (WNN)'
-        y_label <- 'UMAP 2 (WNN)'
-    }
-
     p <- scCustomize::FeaturePlot_scCustom(seurat_object = obj, 
-            features = features, reduction=reduction, order=T, 
+            features = features, reduction=reduction, order=order, 
             pt.size=0.01, colors_use = colors, na_color = "lightgray")
 
-    p <- p + theme(plot.title = element_text(size = 10),
-                text=element_text(size=8), 
-                axis.text=element_text(size=6)) +
-            theme(legend.key.width = unit(3, 'mm')) +
-            theme(axis.text.x=element_blank(),
-                axis.ticks.x=element_blank(),
-                axis.text.y=element_blank(),
-                axis.ticks.y=element_blank()) +
-            ggtitle(title) +
-            labs(x = x_label, y = y_label) +
-            theme(axis.line = element_line(colour = 'black', size = 0.3),
-                axis.ticks = element_line(linewidth = 0.3),
-                axis.ticks.length=unit(1, "mm"))
+    p <- p & CustThemeOption1() & labs(x =xlab, y = ylab)
 
     return(p)
 }
