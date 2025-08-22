@@ -78,4 +78,113 @@ Seurat_DotPlotMarkers <- function(obj=NULL, assay_use='SCT', d_markers=NULL, n=5
 
 
 
+#' Seurat DotPlot - default motif
+#'
+#' @param obj object
+#' @param assay_use assay
+#'
+#' @return plot
+#'
+#' @import ggplot2
+#'
+#' @export
+#'
+Seurat_DotPlot <- function(
+    obj=NULL, 
+    assay_use='chromvar', 
+    features=NULL, 
+    col_min = 0,
+    cex = 6,
+    colors="viridis::mako"
+) {
+
+    p <- DotPlot(obj,
+            features = features,
+            dot.scale = cex,
+            col.min = col_min, 
+            scale = F, 
+            assay = assay_use) +  
+        RotatedAxis()   +
+        paletteer::scale_colour_paletteer_c(colors, direction = -1) +
+        labs(x='', y='')
+
+    p <- p + theme(plot.title = element_text(size = 8),
+            text=element_text(size=6, face="bold"), 
+            axis.text=element_text(size=5),
+            axis.line = element_line(colour = 'black', size = 0.3),
+            axis.ticks = element_line(linewidth = 0.3),
+            axis.ticks.length=unit(1, "mm"),
+            legend.title = element_text(size=6),
+            legend.text = element_text(size=5),
+            legend.key.width = unit(3, 'mm'),
+            legend.key.height = unit(3, 'mm')
+        )
+
+    p
+
+}
+
+
+
+
+
+
+
+
+#' Seurat DotPlot - default motif
+#'
+#' @param obj object
+#' @param assay_use assay
+#'
+#' @return plot
+#'
+#' @import ggplot2
+#'
+#' @export
+#'
+Seurat_DotPlot_test <- function(
+    obj=NULL, 
+    assay_use='chromvar', 
+    features=NULL, 
+    col_min = 0,
+    cex = 6,
+    title="",
+    colors="magma"
+) {
+
+    p <- DotPlot(obj,
+            features = features,
+            dot.scale = cex,
+            col.min = col_min, 
+            scale = F, 
+            assay = assay_use)
+
+    p <- p + geom_point(aes(size=pct.exp), shape = 21, colour="black", stroke=0.4) +
+        guides(size=guide_legend(override.aes=list(shape=21, colour="black", fill="white"), title='Percentage')) +
+        scale_colour_viridis(option="magma") +
+        labs(title=title, x='', y='') +
+        coord_flip() +
+        #theme(text=element_text(size=7, face='bold'), axis.text=element_text(size=6, face='bold')) +
+        theme(plot.title = element_text(size=8, hjust=0.5), text=element_text(size=7), axis.text=element_text(size=6)) +
+        theme(axis.text.x = element_text(angle = 60, hjust = 1, vjust = 1)) +
+        theme(legend.key.size = unit(4, 'mm')) +
+        theme(axis.line=element_line(size=.3), axis.ticks = element_line(size = .3)) 
+
+    p
+
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
