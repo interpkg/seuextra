@@ -97,6 +97,8 @@ Seurat_DotPlot <- function(
     col_min = 0,
     cex = 6,
     lws = 0.3,
+    title_size=8,
+    text_size=6,
     col_set="motif"
 ) {
 
@@ -107,18 +109,19 @@ Seurat_DotPlot <- function(
         labs(x='', y='')
 
     p <- p + geom_point(aes(size=pct.exp), shape = 21, colour="black", stroke=0.4) +
-        theme(plot.title = element_text(size = 8),
-            text=element_text(size=6, face="bold"), 
-            axis.text=element_text(size=5),
+        theme(plot.title = element_text(size = title_size),
+            text=element_text(size=text_size, face="bold"), 
+            axis.text=element_text(size=text_size),
             axis.line = element_line(colour = 'black', size = lws),
             axis.ticks = element_line(linewidth = lws),
             axis.ticks.length=unit(1, "mm"),
-            legend.title = element_text(size=6),
-            legend.text = element_text(size=5),
+            legend.title = element_text(size=text_size),
+            legend.text = element_text(size=text_size-1),
             legend.key.width = unit(3, 'mm'),
             legend.key.height = unit(3, 'mm')) + 
         theme(axis.text.x = element_text(angle = 90, vjust = 0.5, hjust=1))
 
+    # color set
     if (col_set=='motif'){
         p <- p + paletteer::scale_colour_paletteer_c("viridis::mako", direction = -1)
     }
