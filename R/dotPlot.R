@@ -98,6 +98,7 @@ Seurat_DotPlot <- function(
     col_min = 0,
     cex = 6,
     lws = 0.3,
+    title = '',
     title_size=8,
     text_size=6,
     col_set="motif"
@@ -106,7 +107,7 @@ Seurat_DotPlot <- function(
     p <- DotPlot(obj, features = features,
             dot.scale = cex, col.min = col_min, 
             scale = scale, assay = assay) +  
-        labs(x='', y='')
+        labs(title=title, x='', y='')
 
     p <- p + geom_point(aes(size=pct.exp), shape = 21, colour="black", stroke=0.4) +
         theme(plot.title = element_text(size = title_size),
