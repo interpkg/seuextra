@@ -94,6 +94,7 @@ Seurat_DotPlot <- function(
     scale=FALSE,
     assay='chromvar', 
     features=NULL, 
+    flip=FALSE,
     col_min = 0,
     cex = 6,
     lws = 0.3,
@@ -105,7 +106,6 @@ Seurat_DotPlot <- function(
     p <- DotPlot(obj, features = features,
             dot.scale = cex, col.min = col_min, 
             scale = scale, assay = assay) +  
-        RotatedAxis() +
         labs(x='', y='')
 
     p <- p + geom_point(aes(size=pct.exp), shape = 21, colour="black", stroke=0.4) +
@@ -121,6 +121,10 @@ Seurat_DotPlot <- function(
             legend.key.height = unit(3, 'mm')) + 
         theme(axis.text.x = element_text(angle = 90, vjust = 0.5, hjust=1))
 
+    if (flip){
+        p <- p + coord_flip()
+    }
+
     # color set
     if (col_set=='motif'){
         p <- p + paletteer::scale_colour_paletteer_c("viridis::mako", direction = -1)
@@ -129,6 +133,8 @@ Seurat_DotPlot <- function(
         p <- p + guides(size=guide_legend(override.aes=list(shape=21, colour="black", fill="white"), title='Percentage')) +
                 viridis::scale_colour_viridis(option="magma")
     }
+
+
 
     p
 }
