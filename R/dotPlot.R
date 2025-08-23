@@ -99,7 +99,7 @@ Seurat_DotPlot <- function(
     cex = 6,
     lws = 0.3,
     title = '',
-    title_size=8,
+    title_size=7,
     text_size=6,
     col_set="motif"
 ) {
@@ -110,7 +110,7 @@ Seurat_DotPlot <- function(
         labs(title=title, x='', y='')
 
     p <- p + geom_point(aes(size=pct.exp), shape = 21, colour="black", stroke=0.4) +
-        theme(plot.title = element_text(size = title_size),
+        theme(plot.title = element_text(size = title_size, hjust = 0.5),
             text=element_text(size=text_size, face="bold"), 
             axis.text=element_text(size=text_size),
             axis.line = element_line(colour = 'black', size = lws),
