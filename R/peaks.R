@@ -208,3 +208,55 @@ CalIntersectOpenPeaksPerCell <- function(
 
 
 
+
+
+
+#' FragmentDensityForGene
+#'
+#' @param obj seurat object
+#' @param fragment fragment file
+#' @param peaks peak name
+#' @param gene gene name
+#' @param colors color set 
+#' 
+#' @return data frame
+#' @export
+#'
+FragmentDensityForGene <- function(
+      obj=NULL, 
+      fragment='atac_fragments.tsv.gz', 
+      peaks='peaks',
+      gene=NULL, 
+      colors=c('RGC'='#BC243C', 'Neuron'='#0F4C81')
+) {
+
+    # set new path for fragment
+    if (fragment != ''){
+        print(fragment)
+        fg <- CreateFragmentObject(path = fragment, cells = colnames(obj), validate.fragments = TRUE)
+        Fragments(obj@assays[[peaks]]) <- NULL
+        Fragments(obj@assays[[peaks]]) <- fg
+    }
+
+    p <- CoveragePlot(
+            object = obj,
+            region = gene,
+            peaks = TRUE,
+            links = FALSE,
+            extend.upstream = 1000,
+            extend.downstream = 1000
+        ) &
+        theme(text = element_text(size = 7, face="bold"),
+            axis.title.y = element_text(size = 6, face="bold")) &
+        scale_fill_manual(values=colors)
+
+    p <- p & plot_layout(ncol=1) & NoLegend() &
+            theme(plot.title = element_text(hjust = 0.5, face="bold")) 
+
+    p
+}
+
+
+
+
+

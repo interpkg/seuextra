@@ -120,7 +120,8 @@ Seurat_DotPlot <- function(
             legend.text = element_text(size=text_size-1),
             legend.key.width = unit(3, 'mm'),
             legend.key.height = unit(3, 'mm')) + 
-        theme(axis.text.x = element_text(angle = 90, vjust = 0.5, hjust=1))
+        theme(axis.text.x = element_text(angle = 90, vjust = 0.5, hjust=1)) +
+        guides(size=guide_legend(override.aes=list(shape=21, colour="black", fill="white"), title='Cell Percentage'))
 
     if (flip){
         p <- p + coord_flip()
@@ -131,11 +132,8 @@ Seurat_DotPlot <- function(
         p <- p + paletteer::scale_colour_paletteer_c("viridis::mako", direction = -1)
     }
     if (col_set=='exp'){
-        p <- p + guides(size=guide_legend(override.aes=list(shape=21, colour="black", fill="white"), title='Percentage')) +
-                viridis::scale_colour_viridis(option="magma")
+        p <- p + viridis::scale_colour_viridis(option="magma")
     }
-
-
 
     p
 }
