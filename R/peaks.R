@@ -246,7 +246,7 @@ FragmentDensityForGene <- function(
             extend.upstream = 1000,
             extend.downstream = 1000
         ) &
-        theme(text = element_text(size = 7, face="bold"),
+        theme(text = element_text(size = 7, face="bold", color = "black"),
             axis.title.y = element_text(size = 6, face="bold")) &
         scale_fill_manual(values=colors)
 
