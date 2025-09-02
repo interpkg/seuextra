@@ -108,15 +108,20 @@ Seurat_DotPlot <- function(
     title = '',
     title_size=7,
     text_size=6,
+    title_ht='Average\nExpression',
+    title_dot='Cell Percentage',
     col_set="motif"
 ) {
 
     p <- DotPlot(obj, features = features,
             dot.scale = cex, col.min = col_min, dot.min = 0,
-            scale = scale, assay = assay) +  
-        labs(title=title, x='', y='')
+            scale = scale, assay = assay)
 
-    p <- p + geom_point(aes(size=pct.exp), shape = 21, colour="black", stroke=0.4) +
+    # fix complex dot size in percentage
+    p$layers[[1]] <- NULL # remove original geom_point layer where the color scale is hard-coded to use scaled average expression
+    p <- p + geom_point(mapping = aes_string(size = 'pct.exp', color = 'avg.exp'), shape = 21, colour="black", stroke=0.4)
+    
+    p <- p + labs(title=title, x='', y='') +
         theme(plot.title = element_text(size = title_size, hjust = 0.5),
             text=element_text(size=text_size, face="bold"), 
             axis.text=element_text(size=text_size),
@@ -128,7 +133,9 @@ Seurat_DotPlot <- function(
             legend.key.width = unit(3, 'mm'),
             legend.key.height = unit(3, 'mm')) + 
         theme(axis.text.x = element_text(angle = 90, vjust = 0.5, hjust=1)) +
-        guides(size=guide_legend(override.aes=list(shape=21, colour="black", fill="white"), title='Cell Percentage'))
+        guides(size=guide_legend(override.aes=list(shape=21, colour="black", fill="white"), title=title_dot),
+                color = guide_colorbar(title = title_ht))
+
 
     if (flip){
         p <- p + coord_flip()
