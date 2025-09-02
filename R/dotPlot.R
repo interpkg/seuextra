@@ -153,7 +153,7 @@ Seurat_DotPlot <- function(
         p <- p + paletteer::scale_colour_paletteer_c("viridis::mako", direction = -1)
     }
     if (col_set=='exp'){
-        p <- p + viridis::scale_colour_viridis(option="rocket", direction = -1)
+        p <- p + viridis::scale_colour_viridis(option="magma", direction = -1)
     }
 
     p
