@@ -42,15 +42,22 @@ scCustomize_ClusteredDotPlot <- function(obj=NULL, group='', d_markers='', top_n
 #'
 #' @export
 #'
-Seurat_DotPlotMarkers <- function(obj=NULL, assay='SCT', d_markers=NULL, n=5, group='')
-{
+Seurat_DotPlotMarkers <- function(
+    obj=NULL, 
+    assay='SCT', 
+    d_markers=NULL,
+    scale=TRUE,
+    col_min = -2.5,
+    n=5, 
+    group=''
+) {
     topX.markers <- data.frame(d_markers %>% dplyr::group_by(cluster) %>% dplyr::slice(1:n))
 
     meta <- obj@meta.data
     sorted_name <- unique(topX.markers$cluster)
 
     color.scheme <- rev(brewer.pal(9,"RdBu"))
-    p <- Seurat::DotPlot(obj, assay = assay, group.by = group, features = unique(topX.markers$gene), dot.min = 0) +
+    p <- Seurat::DotPlot(obj, assay = assay, group.by = group, features = unique(topX.markers$gene), scale = scale, col.min = col_min, dot.min = 0) +
             theme_bw(base_line_size=0.1) +
             scale_size_area(max_size = 3) +
             scale_color_gradientn(colors=color.scheme, limits = c(-2.5, 2.5)) +
@@ -105,8 +112,8 @@ Seurat_DotPlot <- function(
 ) {
 
     p <- DotPlot(obj, features = features,
-            dot.scale = cex, col.min = col_min, 
-            scale = scale, assay = assay, dot.min = 0) +  
+            dot.scale = cex, col.min = col_min, dot.min = 0,
+            scale = scale, assay = assay) +  
         labs(title=title, x='', y='')
 
     p <- p + geom_point(aes(size=pct.exp), shape = 21, colour="black", stroke=0.4) +
