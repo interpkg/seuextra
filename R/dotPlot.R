@@ -114,7 +114,7 @@ Seurat_DotPlot <- function(
     title_ht='Average\nExpression',
     title_dot='Cell Percentage',
     col_set="motif",
-    col_direction=1,
+    col_direction=1
 ) {
 
     p <- DotPlot(obj, features = features,
