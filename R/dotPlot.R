@@ -113,7 +113,8 @@ Seurat_DotPlot <- function(
     text_size=6,
     title_ht='Average\nExpression',
     title_dot='Cell Percentage',
-    col_set="motif"
+    col_set="motif",
+    col_direction=1,
 ) {
 
     p <- DotPlot(obj, features = features,
@@ -150,10 +151,10 @@ Seurat_DotPlot <- function(
 
     # color set
     if (col_set=='motif'){
-        p <- p + paletteer::scale_colour_paletteer_c("viridis::mako", direction = -1)
+        p <- p + paletteer::scale_colour_paletteer_c("viridis::mako", direction = col_direction)
     }
     if (col_set=='exp'){
-        p <- p + viridis::scale_colour_viridis(option="magma", direction = -1)
+        p <- p + viridis::scale_colour_viridis(option="magma", direction = col_direction)
     }
 
     p
