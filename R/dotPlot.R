@@ -50,7 +50,7 @@ Seurat_DotPlotMarkers <- function(obj=NULL, assay='SCT', d_markers=NULL, n=5, gr
     sorted_name <- unique(topX.markers$cluster)
 
     color.scheme <- rev(brewer.pal(9,"RdBu"))
-    p <- Seurat::DotPlot(obj, assay = assay, group.by = group, features = unique(topX.markers$gene)) +
+    p <- Seurat::DotPlot(obj, assay = assay, group.by = group, features = unique(topX.markers$gene), dot.min = 0) +
             theme_bw(base_line_size=0.1) +
             scale_size_area(max_size = 3) +
             scale_color_gradientn(colors=color.scheme, limits = c(-2.5, 2.5)) +
@@ -106,7 +106,7 @@ Seurat_DotPlot <- function(
 
     p <- DotPlot(obj, features = features,
             dot.scale = cex, col.min = col_min, 
-            scale = scale, assay = assay) +  
+            scale = scale, assay = assay, dot.min = 0) +  
         labs(title=title, x='', y='')
 
     p <- p + geom_point(aes(size=pct.exp), shape = 21, colour="black", stroke=0.4) +
