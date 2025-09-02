@@ -119,8 +119,8 @@ Seurat_DotPlot <- function(
             scale = scale, assay = assay)
 
     # fix complex dot size in percentage
-    p$layers[[1]] <- NULL # remove original geom_point layer where the color scale is hard-coded to use scaled average expression
-    p <- p + geom_point(mapping = aes_string(size = 'pct.exp', color = 'avg.exp'), shape = 21, colour="black", stroke=0.4)
+    #p$layers[[1]] <- NULL # remove original geom_point layer where the color scale is hard-coded to use scaled average expression
+    p <- p + geom_point(aes(size = pct.exp, color = avg.exp), shape = 21, colour="black", stroke=0.4)
     
     p <- p + labs(title=title, x='', y='') +
         theme(plot.title = element_text(size = title_size, hjust = 0.5),
