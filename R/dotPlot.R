@@ -99,6 +99,7 @@ Seurat_DotPlotMarkers <- function(
 Seurat_DotPlot <- function(
     obj=NULL, 
     scale=FALSE,
+    set_scale_size=TRUE,
     assay='chromvar', 
     features=NULL, 
     flip=FALSE,
@@ -121,7 +122,11 @@ Seurat_DotPlot <- function(
 
     # fix complex dot size in percentage
     p <- p + geom_point(aes(size = pct.exp, color = avg.exp), shape = 21, colour="black", stroke=0.4)
-    p <- p + ggplot2::scale_size(limits = c(0, 100), range = c(0, 5), breaks = c(0, 50, 100))
+    
+    if (set_scale_size){
+        p <- p + ggplot2::scale_size(limits = c(0, 100), range = c(0, 5), breaks = c(0, 50, 100))
+    }
+    
     p <- p + labs(title=title, x='', y='') +
         theme(plot.title = element_text(size = title_size, hjust = 0.5),
             text=element_text(size=text_size, face="bold"), 
