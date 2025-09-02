@@ -116,6 +116,7 @@ Seurat_DotPlot <- function(
 
     p <- DotPlot(obj, features = features,
             dot.scale = cex, col.min = col_min, col.max = col_max, dot.min = 0,
+            scale_size(limits = c(0, 100)),
             scale = scale, assay = assay)
 
     # fix complex dot size in percentage
