@@ -149,14 +149,14 @@ EstimatedSignal <- function(obj=NULL, assay_use='SCT', name='', features='', min
 
 
 
-#' Gene expression markers for all group
+#' Find markers for all group
 #'
 #' @param obj object
 #' @param assay_use assay
 #' @return data frame
 #' @export
 #'
-GenxFindAllMarkers <- function(obj, assay_use='SCT', idents='seurat_clusters', logfc=.25, min_pct=0.1, min_diff_pct=0, recorrect_umi=TRUE)
+RunFindAllMarkers <- function(obj, assay_use='SCT', idents='seurat_clusters', logfc=.25, min_pct=0.1, min_diff_pct=0, recorrect_umi=TRUE)
 { 
     Idents(obj) <- idents
 
@@ -186,14 +186,44 @@ GenxFindAllMarkers <- function(obj, assay_use='SCT', idents='seurat_clusters', l
 
 
 
-#' Genx Conserved CellType Markers
+#' Find markers for two group
 #'
 #' @param obj object
 #' @param assay_use assay
 #' @return data frame
 #' @export
 #'
-GenxConservedCellTypeMarkers <- function(obj, assay_use='SCT', group='cell_type2')
+RunFindMarkers <- function(obj=NULL, ct_target=NULL, ct_bg=NULL, recor_umi=TRUE, outdir='.')
+{
+    print('[INFO] find peak markers ...')
+    diff_peaks <- FindMarkers(
+        object = obj,
+        ident.1 = ct_target,
+        ident.2 = ct_bg,
+        only.pos = FALSE,
+        logfc.threshold = 0,
+        recorrect_umi = recor_umi
+    )
+    #logfc.threshold = 0.25,
+
+    diff_peaks$diff_pct = diff_peaks$pct.1 - diff_peaks$pct.2
+    write.table(diff_peaks, file = paste0(outdir, '/findmarker.geneExp.xls'), sep = "\t", quote=FALSE, col.names = NA)
+
+}
+
+
+
+
+
+
+#' Find Conserved CellType Markers
+#'
+#' @param obj object
+#' @param assay_use assay
+#' @return data frame
+#' @export
+#'
+RunFindConservedCellTypeMarkers <- function(obj, assay_use='SCT', group='cell_type2')
 { 
     Idents(obj) <- group
     meta <- obj@meta.data
