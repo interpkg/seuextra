@@ -156,30 +156,30 @@ EstimatedSignal <- function(obj=NULL, assay_use='SCT', name='', features='', min
 #' @return data frame
 #' @export
 #'
-RunFindAllMarkers <- function(obj, assay_use='SCT', idents='seurat_clusters', logfc=.25, min_pct=0.1, min_diff_pct=0, recorrect_umi=TRUE)
+RunFindAllMarkers <- function(obj, assay_use='SCT', idents='seurat_clusters', logfc=.25, min_pct=0.1, min_diff_pct=0, recor_umi=TRUE)
 { 
     Idents(obj) <- idents
 
-    diff_exp <- Seurat::FindAllMarkers(
+    diff_markers <- Seurat::FindAllMarkers(
         object = obj,
         only.pos = TRUE,
         logfc.threshold = logfc,
         min.pct = min_pct,
         min.diff.pct = min_diff_pct,
-        recorrect_umi = recorrect_umi
+        recorrect_umi = recor_umi
     )
 
-    diff_exp$diff_pct <- diff_exp$pct.1 - diff_exp$pct.2
+    diff_markers$diff_pct <- diff_markers$pct.1 - diff_markers$pct.2
 
     # filter genes not in SCT
     all_genes <- rownames(obj@assays[[assay_use]]@data)
     # wrong gene name from duplicated gene markers
-    wrong_gene_name <- setdiff(rownames(diff_exp), all_genes)
+    wrong_gene_name <- setdiff(rownames(diff_markers), all_genes)
 
-    diff_exp$gene <- rownames(diff_exp)
-    diff_exp$gene[diff_exp$gene %in% wrong_gene_name] <- str_sub(diff_exp$gene[diff_exp$gene %in% wrong_gene_name], end = -2)
+    diff_markers$gene <- rownames(diff_markers)
+    diff_markers$gene[diff_markers$gene %in% wrong_gene_name] <- str_sub(diff_markers$gene[diff_markers$gene %in% wrong_gene_name], end = -2)
 
-    return(diff_exp)
+    return(diff_markers)
 }
 
 
@@ -193,10 +193,10 @@ RunFindAllMarkers <- function(obj, assay_use='SCT', idents='seurat_clusters', lo
 #' @return data frame
 #' @export
 #'
-RunFindMarkers <- function(obj=NULL, ct_target=NULL, ct_bg=NULL, recor_umi=TRUE, outdir='.')
+RunFindMarkers <- function(obj=NULL, ct_target=NULL, ct_bg=NULL, recor_umi=TRUE)
 {
     print('[INFO] find peak markers ...')
-    diff_peaks <- FindMarkers(
+    diff_markers <- FindMarkers(
         object = obj,
         ident.1 = ct_target,
         ident.2 = ct_bg,
@@ -206,9 +206,9 @@ RunFindMarkers <- function(obj=NULL, ct_target=NULL, ct_bg=NULL, recor_umi=TRUE,
     )
     #logfc.threshold = 0.25,
 
-    diff_peaks$diff_pct = diff_peaks$pct.1 - diff_peaks$pct.2
-    write.table(diff_peaks, file = paste0(outdir, '/findmarker.geneExp.xls'), sep = "\t", quote=FALSE, col.names = NA)
+    diff_markers$diff_pct = diff_markers$pct.1 - diff_markers$pct.2
 
+    return(diff_markers)
 }
 
 
