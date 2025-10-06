@@ -14,6 +14,8 @@ scCustom_FeaturePlot(
   xlab = "UMAP 1",
   ylab = "UMAP 2",
   order = TRUE,
+  min_cutoff = NA,
+  max_cutoff = NA,
   colors = viridis_plasma_dark_high
 )
 }

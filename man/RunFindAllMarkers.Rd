@@ -5,7 +5,7 @@
 \title{Find markers for all group}
 \usage{
 RunFindAllMarkers(
-  obj,
+  obj = NULL,
   assay_use = "SCT",
   idents = "seurat_clusters",
   logfc = 0.25,
