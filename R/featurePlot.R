@@ -91,18 +91,24 @@ Seurat_FeaturePlot <- function(
 #' @export
 #'
 scCustom_FeaturePlot <- function(
-    obj=NULL, slot="data", 
+    obj=NULL, 
+    slot="data",
     features=NULL, 
-    reduction='wnn.umap', 
+    reduction='wnn.umap',
     pt_size=0.01,
     title='',
-    xlab='UMAP 1', ylab='UMAP 2',
+    xlab='UMAP 1', 
+    ylab='UMAP 2',
     order=TRUE,
+    min_cutoff = NA,
+    max_cutoff = NA,
     colors=viridis_plasma_dark_high
 ){
     p <- scCustomize::FeaturePlot_scCustom(seurat_object = obj, 
             features = features, reduction=reduction, order=order, 
-            pt.size=pt.size, colors_use = colors, na_color = "lightgray")
+            pt.size=pt_size, colors_use = colors, na_color = "lightgray",
+            min.cutoff=min_cutoff, max.cutoff=max_cutoff
+        )
 
     p <- p & CustThemeOption1() & labs(x =xlab, y = ylab)
 
