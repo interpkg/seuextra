@@ -9,7 +9,7 @@ RunFindMarkers(obj = NULL, ct_target = NULL, ct_bg = NULL, recor_umi = TRUE)
 \arguments{
 \item{obj}{object}
 
-\item{assay_use}{assay}
+\item{assay}{assay}
 }
 \value{
 data frame

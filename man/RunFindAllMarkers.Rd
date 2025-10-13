@@ -6,7 +6,7 @@
 \usage{
 RunFindAllMarkers(
   obj = NULL,
-  assay_use = "SCT",
+  assay = "SCT",
   idents = "seurat_clusters",
   logfc = 0.25,
   min_pct = 0.1,
@@ -17,7 +17,7 @@ RunFindAllMarkers(
 \arguments{
 \item{obj}{object}
 
-\item{assay_use}{assay}
+\item{assay}{assay}
 }
 \value{
 data frame

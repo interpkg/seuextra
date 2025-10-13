@@ -80,7 +80,7 @@ SeuratAddScore <- function(
     name='', 
     features=''
 ){
-    all_gene <- rownames(obj[[assay_use]]@data)
+    all_gene <- rownames(obj[[assay]]@data)
     gene_intersect <- intersect(features, all_gene)
 
     obj <- AddModuleScore(
@@ -108,9 +108,9 @@ SeuratAddScore <- function(
 #'
 #' @export
 #'
-EstimatedSignal <- function(obj=NULL, assay_use='SCT', name='', features='', min_cutoff=0.1, max_cutoff=0.2, umap='umap')
+EstimatedSignal <- function(obj=NULL, assay='SCT', name='', features='', min_cutoff=0.1, max_cutoff=0.2, umap='umap')
 {
-    obj <- SeuratAddScore(obj=obj, assay_use=assay_use, name=name, features=features)
+    obj <- SeuratAddScore(obj=obj, assay=assay, name=name, features=features)
 
     df <- obj@meta.data[,c('orig.ident', 'seurat_clusters', paste0(name, '1'))]
     df$signal <- 'Middle'
@@ -130,13 +130,13 @@ EstimatedSignal <- function(obj=NULL, assay_use='SCT', name='', features='', min
 #' Find markers for all group
 #'
 #' @param obj object
-#' @param assay_use assay
+#' @param assay assay
 #' @return data frame
 #' @export
 #'
 RunFindAllMarkers <- function(
     obj=NULL, 
-    assay_use='SCT', 
+    assay='SCT', 
     idents='seurat_clusters', 
     logfc=.25, 
     min_pct=0.1, 
@@ -157,7 +157,7 @@ RunFindAllMarkers <- function(
     diff_markers$diff_pct <- diff_markers$pct.1 - diff_markers$pct.2
 
     # filter genes not in SCT
-    all_genes <- rownames(obj@assays[[assay_use]]@data)
+    all_genes <- rownames(obj@assays[[assay]]@data)
     # wrong gene name from duplicated gene markers
     wrong_gene_name <- setdiff(rownames(diff_markers), all_genes)
 
@@ -174,7 +174,7 @@ RunFindAllMarkers <- function(
 #' Find markers for two group
 #'
 #' @param obj object
-#' @param assay_use assay
+#' @param assay assay
 #' @return data frame
 #' @export
 #'
@@ -204,11 +204,11 @@ RunFindMarkers <- function(obj=NULL, ct_target=NULL, ct_bg=NULL, recor_umi=TRUE)
 #' Find Conserved CellType Markers
 #'
 #' @param obj object
-#' @param assay_use assay
+#' @param assay assay
 #' @return data frame
 #' @export
 #'
-RunFindConservedCellTypeMarkers <- function(obj, assay_use='SCT', group='cell_type2')
+RunFindConservedCellTypeMarkers <- function(obj, assay='SCT', group='cell_type2')
 { 
     Idents(obj) <- group
     meta <- obj@meta.data
@@ -217,7 +217,7 @@ RunFindConservedCellTypeMarkers <- function(obj, assay_use='SCT', group='cell_ty
     d_markers <- NULL
     i = 1
     for (x in celltype_set){
-        temp_markers <- FindConservedMarkers(obj, ident.1 = x, grouping.var = "orig.ident", assay=assay_use, verbose = FALSE)
+        temp_markers <- FindConservedMarkers(obj, ident.1 = x, grouping.var = "orig.ident", assay=assay, verbose = FALSE)
         temp_markers[[group]] <- x
         
         if (i == 1){

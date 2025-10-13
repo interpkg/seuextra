@@ -4,12 +4,12 @@
 \alias{RunFindConservedCellTypeMarkers}
 \title{Find Conserved CellType Markers}
 \usage{
-RunFindConservedCellTypeMarkers(obj, assay_use = "SCT", group = "cell_type2")
+RunFindConservedCellTypeMarkers(obj, assay = "SCT", group = "cell_type2")
 }
 \arguments{
 \item{obj}{object}
 
-\item{assay_use}{assay}
+\item{assay}{assay}
 }
 \value{
 data frame

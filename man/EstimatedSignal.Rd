@@ -6,7 +6,7 @@
 \usage{
 EstimatedSignal(
   obj = NULL,
-  assay_use = "SCT",
+  assay = "SCT",
   name = "",
   features = "",
   min_cutoff = 0.1,
