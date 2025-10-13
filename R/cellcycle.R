@@ -27,7 +27,7 @@ SeuratCellCycleScoring <- function(obj=NULL, ref='mouse', s.genes=NULL, g2m.gene
 
     # CellCycleScoring2 for all cell cycle genes
     cc.genes <- c(s.genes, g2m.genes)
-    obj <- SeuratAddScore(obj=obj, name='cc_score', features=cc.genes, assay_use='SCT')
+    obj <- SeuratAddScore(obj=obj, name='cc_score', features=cc.genes, assay='SCT')
 
     df <- obj@meta.data[,c('cc_score1', 'S.Score', 'G2M.Score', 'Phase', 'seurat_clusters')]
     
