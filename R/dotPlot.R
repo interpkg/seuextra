@@ -104,6 +104,7 @@ Seurat_DotPlot <- function(
     features=NULL, 
     flip=FALSE,
     shape = 21,
+    stroke = 0,
     shape_color = 'black',
     shape_fill = 'white',
     col_min = -2.5,
@@ -125,7 +126,7 @@ Seurat_DotPlot <- function(
             scale = scale, assay = assay)
 
     # fix complex dot size in percentage
-    p <- p + geom_point(aes(size = pct.exp, color = avg.exp), shape = shape, colour="black", stroke=0.4)
+    p <- p + geom_point(aes(size = pct.exp, color = avg.exp), shape = shape, colour=shape_color, stroke=stroke)
     
     if (set_scale_size){
         p <- p + ggplot2::scale_size(limits = c(0, 100), range = c(0, 5), breaks = c(0, 50, 100))
