@@ -143,7 +143,7 @@ Seurat_DotPlot <- function(
             legend.key.width = unit(3, 'mm'),
             legend.key.height = unit(3, 'mm')) + 
         theme(axis.text.x = element_text(angle = 90, vjust = 0.5, hjust=1)) +
-        guides(size=guide_legend(override.aes=list(shape=shape, colour="black", fill="white"), title=title_dot), 
+        guides(size=guide_legend(override.aes=list(shape=shape, colour=shape_color, fill=shape_fill), title=title_dot), 
             color = guide_colorbar(title = title_ht)
             )
 
