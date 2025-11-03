@@ -103,7 +103,9 @@ Seurat_DotPlot <- function(
     assay='SCT', 
     features=NULL, 
     flip=FALSE,
-    shape = 16,
+    shape = 21,
+    shape_color = 'black',
+    shape_fill = 'white',
     col_min = -2.5,
     col_max = 2.5,
     dot_min = 0,
@@ -152,7 +154,7 @@ Seurat_DotPlot <- function(
 
     # color set
     if (col_set=='motif'){
-        p <- p + paletteer::scale_colour_paletteer_c("viridis::mako", direction = col_direction)
+        p <- p + paletteer::scale_colour_paletteer_c("viridis::mako", direction = -1)
     }
     if (col_set=='exp'){
         p <- p + viridis::scale_colour_viridis(option="magma", direction = col_direction)
