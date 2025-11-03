@@ -99,10 +99,11 @@ Seurat_DotPlotMarkers <- function(
 Seurat_DotPlot <- function(
     obj=NULL, 
     scale=FALSE,
-    set_scale_size=TRUE,
+    set_scale_size=FALSE,
     assay='SCT', 
     features=NULL, 
     flip=FALSE,
+    shape = 16,
     col_min = -2.5,
     col_max = 2.5,
     dot_min = 0,
@@ -122,7 +123,7 @@ Seurat_DotPlot <- function(
             scale = scale, assay = assay)
 
     # fix complex dot size in percentage
-    p <- p + geom_point(aes(size = pct.exp, color = avg.exp), shape = 21, colour="black", stroke=0.4)
+    p <- p + geom_point(aes(size = pct.exp, color = avg.exp), shape = shape, colour="black", stroke=0.4)
     
     if (set_scale_size){
         p <- p + ggplot2::scale_size(limits = c(0, 100), range = c(0, 5), breaks = c(0, 50, 100))
@@ -140,7 +141,7 @@ Seurat_DotPlot <- function(
             legend.key.width = unit(3, 'mm'),
             legend.key.height = unit(3, 'mm')) + 
         theme(axis.text.x = element_text(angle = 90, vjust = 0.5, hjust=1)) +
-        guides(size=guide_legend(override.aes=list(shape=21, colour="black", fill="white"), title=title_dot), 
+        guides(size=guide_legend(override.aes=list(shape=shape, colour="black", fill="white"), title=title_dot), 
             color = guide_colorbar(title = title_ht)
             )
 
