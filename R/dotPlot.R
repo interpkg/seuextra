@@ -104,7 +104,7 @@ Seurat_DotPlot <- function(
     features=NULL, 
     flip=FALSE,
     shape = 21,
-    stroke = 0,
+    stroke = 0.2,
     shape_color = 'black',
     shape_fill = 'white',
     col_min = -2.5,
@@ -126,7 +126,7 @@ Seurat_DotPlot <- function(
             scale = scale, assay = assay)
 
     # fix complex dot size in percentage
-    p <- p + geom_point(aes(size = pct.exp, fill = avg.exp), shape = shape, colour=shape_color, stroke=stroke)
+    #p <- p + geom_point(aes(size = pct.exp, color = avg.exp), shape = shape, colour=shape_color, stroke=stroke)
     
     if (set_scale_size){
         p <- p + ggplot2::scale_size(limits = c(0, 100), range = c(0, 5), breaks = c(0, 50, 100))
@@ -143,10 +143,10 @@ Seurat_DotPlot <- function(
             legend.text = element_text(size=text_size-1),
             legend.key.width = unit(3, 'mm'),
             legend.key.height = unit(3, 'mm')) + 
-        theme(axis.text.x = element_text(angle = 90, vjust = 0.5, hjust=1)) +
-        guides(size=guide_legend(override.aes=list(shape=shape, colour=shape_color, fill=shape_fill), title=title_dot), 
-            color = guide_colorbar(title = title_ht)
-            )
+        theme(axis.text.x = element_text(angle = 90, vjust = 0.5, hjust=1)) 
+        #guides(size=guide_legend(override.aes=list(shape=shape, colour=shape_color, fill=shape_fill), title=title_dot), 
+        #    color = guide_colorbar(title = title_ht)
+        #    )
 
 
     if (flip){
@@ -155,10 +155,10 @@ Seurat_DotPlot <- function(
 
     # color set
     if (col_set=='motif'){
-        p <- p + paletteer::scale_fill_paletteer_c("viridis::mako", direction = -1)
+        p <- p + paletteer::scale_colour_paletteer_c("viridis::mako", direction = -1)
     }
     if (col_set=='exp'){
-        p <- p + viridis::scale_fill_viridis(option="magma", direction = col_direction)
+        p <- p + viridis::scale_colour_viridis(option="magma", direction = col_direction)
     }
 
     p
