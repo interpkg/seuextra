@@ -126,7 +126,7 @@ Seurat_DotPlot <- function(
             scale = scale, assay = assay)
 
     # fix complex dot size in percentage
-    p <- p + geom_point(aes(size = pct.exp, color = avg.exp), shape = shape, colour=shape_color, stroke=stroke)
+    p <- p + geom_point(aes(size = pct.exp, fill = avg.exp), shape = shape, colour=shape_color, stroke=stroke)
     
     if (set_scale_size){
         p <- p + ggplot2::scale_size(limits = c(0, 100), range = c(0, 5), breaks = c(0, 50, 100))
@@ -155,10 +155,10 @@ Seurat_DotPlot <- function(
 
     # color set
     if (col_set=='motif'){
-        p <- p + paletteer::scale_colour_paletteer_c("viridis::mako", direction = -1)
+        p <- p + paletteer::scale_fill_paletteer_c("viridis::mako", direction = -1)
     }
     if (col_set=='exp'){
-        p <- p + viridis::scale_colour_viridis(option="magma", direction = col_direction)
+        p <- p + viridis::scale_fill_viridis(option="magma", direction = col_direction)
     }
 
     p
