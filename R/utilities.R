@@ -188,7 +188,6 @@ RunFindMarkers <- function(
     ct_bg=NULL, 
     recor_umi=TRUE
 ){
-    print('[INFO] find peak markers ...')
     diff_markers <- FindMarkers(
         object = obj,
         assay = assay,
