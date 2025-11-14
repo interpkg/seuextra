@@ -111,7 +111,6 @@ Seurat_DotPlot <- function(
     title = '',
     title_size=7,
     text_size=6,
-    title_ht='Average\nExpression',
     title_dot='Cell Percentage',
     col_set="motif",
     col_direction=1
@@ -136,7 +135,8 @@ Seurat_DotPlot <- function(
             legend.text = element_text(size=text_size-1),
             legend.key.width = unit(3, 'mm'),
             legend.key.height = unit(3, 'mm')) + 
-        theme(axis.text.x = element_text(angle = 90, vjust = 0.5, hjust=1))
+        theme(axis.text.x = element_text(angle = 90, vjust = 0.5, hjust=1)) +
+        guides(aesthetic = guide_legend(title = title_dot))
 
 
     if (flip){
@@ -145,10 +145,10 @@ Seurat_DotPlot <- function(
 
     # color set
     if (col_set=='motif'){
-        p <- p + paletteer::scale_colour_paletteer_c("viridis::mako", direction = -1)
+        p <- p + paletteer::scale_colour_paletteer_c("viridis::mako", direction = -1, name = "Motif Activity")
     }
     if (col_set=='exp'){
-        p <- p + viridis::scale_colour_viridis(option="magma", direction = col_direction)
+        p <- p + viridis::scale_colour_viridis(option="magma", direction = col_direction, name = "Average\nExpression")
     }
 
     p

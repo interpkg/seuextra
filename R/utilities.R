@@ -178,15 +178,25 @@ RunFindAllMarkers <- function(
 #' @return data frame
 #' @export
 #'
-RunFindMarkers <- function(obj=NULL, ct_target=NULL, ct_bg=NULL, recor_umi=TRUE)
-{
+RunFindMarkers <- function(
+    obj=NULL, 
+    assay='SCT', 
+    idents='seurat_clusters',
+    logfc=0.25, 
+    only_pos=TRUE, 
+    ct_target=NULL, 
+    ct_bg=NULL, 
+    recor_umi=TRUE
+){
     print('[INFO] find peak markers ...')
     diff_markers <- FindMarkers(
         object = obj,
+        assay = assay,
+        group.by = idents,
         ident.1 = ct_target,
         ident.2 = ct_bg,
-        only.pos = FALSE,
-        logfc.threshold = 0,
+        only.pos = only_pos,
+        logfc.threshold = logfc,
         recorrect_umi = recor_umi
     )
     #logfc.threshold = 0.25,

@@ -4,7 +4,16 @@
 \alias{RunFindMarkers}
 \title{Find markers for two group}
 \usage{
-RunFindMarkers(obj = NULL, ct_target = NULL, ct_bg = NULL, recor_umi = TRUE)
+RunFindMarkers(
+  obj = NULL,
+  assay = "SCT",
+  idents = "seurat_clusters",
+  logfc = 0.25,
+  only_pos = TRUE,
+  ct_target = NULL,
+  ct_bg = NULL,
+  recor_umi = TRUE
+)
 }
 \arguments{
 \item{obj}{object}

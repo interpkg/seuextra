@@ -69,7 +69,7 @@ BedtoolsIntersectQuery <- function(query=NULL, db=NULL, cutoff=0.5){
       command <- paste0("bedtools intersect -a ", query, " -b ", db, " -f ", cutoff, " -wa -wb | cut -f1-3 | sed 's/\t/-/g' ")
       intersected_bed <- system(command, intern = TRUE)
       
-      unique(intersected_bed) 
+      return(unique(intersected_bed))
       # chr-start-end
 }
 

@@ -19,7 +19,6 @@ Seurat_DotPlot(
   title = "",
   title_size = 7,
   text_size = 6,
-  title_ht = "Average\\nExpression",
   title_dot = "Cell Percentage",
   col_set = "motif",
   col_direction = 1
